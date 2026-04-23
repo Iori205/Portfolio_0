@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Explicitly allow important pages
+Allow: /about
+Allow: /projects
+Allow: /skills
+Allow: /contact
+
+# Sitemap location
+Sitemap: https://your-domain.com/sitemap.xml
