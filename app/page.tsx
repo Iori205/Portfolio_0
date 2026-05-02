@@ -4,10 +4,10 @@ import type React from "react";
 import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ProjectCard } from "@/components/project-card";
 import { HobbyCard } from "@/components/hobby-card";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 import { sendEmail } from "@/app/actions/send-email";
@@ -71,6 +71,8 @@ const staggerContainer = {
   }
 };
 
+type FormStatus = "idle" | "success" | "error";
+
 export default function Home() {
   const [formData, setFormData] = useState({
     name: "",
@@ -78,25 +80,25 @@ export default function Home() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<FormStatus>("idle");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setFormStatus("idle");
     try {
       const result = await sendEmail(formData);
       if (result.success) {
-        alert("Message sent! I'll get back to you within 24 hours.");
+        setFormStatus("success");
         setFormData({ name: "", email: "", message: "" });
+        // Auto-hide success message after 5 seconds
+        setTimeout(() => setFormStatus("idle"), 5000);
       } else {
-        alert(
-          "Something went wrong. Please email me directly at sodoos534@gmail.com"
-        );
+        setFormStatus("error");
       }
     } catch (error) {
       console.error("Form error:", error);
-      alert(
-        "Something went wrong. Please email me directly at sodoos534@gmail.com"
-      );
+      setFormStatus("error");
     } finally {
       setIsSubmitting(false);
     }
@@ -111,15 +113,19 @@ export default function Home() {
       <section className="relative z-10 flex min-h-screen items-center justify-center px-6 py-32 md:py-20">
         <div className="mx-auto w-full max-w-6xl">
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
-            {/* Photo */}
+            {/* Photo - shows first on mobile, second on desktop */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="order-2 flex justify-center lg:order-1"
+              className="flex justify-center lg:order-1"
             >
               <div className="group relative">
-                {/* Glow ring */}
+                {/* Pulsing ring around photo */}
+                <div className="pulse-ring absolute -inset-3 rounded-full border-2 border-primary/30" />
+                <div className="pulse-ring absolute -inset-5 rounded-full border border-primary/20" style={{ animationDelay: "1s" }} />
+                
+                {/* Glow ring on hover */}
                 <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/20 via-accent/10 to-transparent opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
                 <div className="relative h-72 w-72 md:h-80 md:w-80 lg:h-[22rem] lg:w-[22rem]">
                   <Image
@@ -136,12 +142,12 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Text */}
+            {/* Text - shows second on mobile, first on desktop */}
             <motion.div
               initial="hidden"
               animate="visible"
               variants={staggerContainer}
-              className="order-1 space-y-8 lg:order-2"
+              className="space-y-8 lg:order-2"
             >
               {/* Status badge */}
               <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 backdrop-blur-sm">
@@ -372,6 +378,34 @@ export default function Home() {
                 >
                   {isSubmitting ? "Sending..." : "Send message"}
                 </button>
+
+                {/* Inline toast feedback */}
+                <AnimatePresence mode="wait">
+                  {formStatus === "success" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="flex items-center gap-2 rounded-lg bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400"
+                    >
+                      <Check className="h-4 w-4" />
+                      <span>Message sent! I&apos;ll get back to you within 24 hours.</span>
+                    </motion.div>
+                  )}
+                  {formStatus === "error" && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                      className="flex items-center gap-2 rounded-lg bg-red-500/10 px-4 py-3 text-sm text-red-400"
+                    >
+                      <AlertCircle className="h-4 w-4" />
+                      <span>Something went wrong. Please email me directly at sodoos534@gmail.com</span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </form>
             </div>
           </motion.div>

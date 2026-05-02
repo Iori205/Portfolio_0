@@ -211,3 +211,40 @@ body {
   pointer-events: none;
   z-index: 0;
 }
+
+/* Scroll progress indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, oklch(0.7 0.18 270), oklch(0.65 0.2 280));
+  transform-origin: left;
+  z-index: 9999;
+}
+
+/* Pulsing ring animation for profile photo */
+@keyframes pulse-ring {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(1.05);
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 3s ease-in-out infinite;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring {
+    animation: none;
+  }
+  .scroll-progress {
+    display: none;
+  }
+}

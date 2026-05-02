@@ -4,12 +4,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const links = [
     { href: "/", label: "Home" },
@@ -27,7 +36,16 @@ export function Navbar() {
       className="fixed top-0 z-50 w-full"
     >
       <div className="mx-auto max-w-6xl px-6 py-4">
-        <div className="flex h-12 items-center justify-between rounded-full border border-white/[0.08] bg-black/50 px-6 backdrop-blur-xl">
+        <div 
+          className={`flex h-12 items-center justify-between rounded-full border px-6 transition-all duration-300 ${
+            isScrolled 
+              ? "border-white/[0.05] bg-black/70 backdrop-blur-2xl shadow-lg shadow-black/10" 
+              : "border-white/[0.08] bg-black/50 backdrop-blur-xl"
+          }`}
+          style={{
+            borderBottomColor: isScrolled ? "rgba(255,255,255,0.05)" : undefined,
+          }}
+        >
           {/* Logo / Name */}
           <Link href="/" className="group flex items-center gap-3">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary transition-all duration-300 group-hover:bg-primary group-hover:text-primary-foreground group-hover:shadow-lg group-hover:shadow-primary/30">

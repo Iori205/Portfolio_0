@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import { Suspense } from "react"
 import { Navbar } from "@/components/navbar"
+import { ScrollProgress } from "@/components/scroll-progress"
 
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
@@ -94,6 +95,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark bg-background">
       <body className={`font-sans antialiased ${inter.variable} ${jetbrainsMono.variable}`}>
+        <ScrollProgress />
         <Navbar />
         <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>{children}</Suspense>
         <Analytics />
