@@ -1,8 +1,10 @@
+"use client";
+
 import { ProjectCard } from "@/components/project-card";
 import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import type { Metadata } from "next";
+import { motion } from "framer-motion";
 
 type ProjectItem = {
   title: string;
@@ -12,22 +14,21 @@ type ProjectItem = {
   link: string;
 };
 
-export const metadata: Metadata = {
-  title: "Projects - Full-Stack & Backend Engineering",
-  description:
-    "Explore projects by Baatar-Ochir Sodbilegt including full-stack web platforms, referral systems, and scalable backend services.",
-  keywords: [
-    "software engineer projects",
-    "full-stack projects",
-    "backend projects",
-    "React projects",
-    "Node.js projects",
-  ],
-  openGraph: {
-    title: "Projects Portfolio - Baatar-Ochir Sodbilegt",
-    description:
-      "Internship and engineering projects covering full-stack platforms, REST APIs, asynchronous processing, and database architecture.",
-  },
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+  }
 };
 
 export default function Projects() {
@@ -68,14 +69,19 @@ export default function Projects() {
       <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-xl transition-all hover:border-primary/30 hover:bg-primary/10"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <div className="mx-auto max-w-6xl space-y-16">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="mx-auto max-w-6xl space-y-16"
+        >
           {/* Header */}
-          <div className="space-y-4">
+          <motion.div variants={fadeInUp} className="space-y-4">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               Portfolio
             </p>
@@ -86,10 +92,10 @@ export default function Projects() {
               A showcase of my internship and engineering work
             </p>
             <div className="accent-line w-20" />
-          </div>
+          </motion.div>
 
           {/* Web Development */}
-          <section className="space-y-8">
+          <motion.section variants={fadeInUp} className="space-y-8">
             <div className="flex items-center gap-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
                 01
@@ -100,13 +106,18 @@ export default function Projects() {
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               {itProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                >
+                  <ProjectCard {...project} />
+                </motion.div>
               ))}
             </div>
-          </section>
+          </motion.section>
 
           {/* Mobile Development */}
-          <section className="space-y-8">
+          <motion.section variants={fadeInUp} className="space-y-8">
             <div className="flex items-center gap-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
                 02
@@ -117,11 +128,16 @@ export default function Projects() {
             </div>
             <div className="grid gap-6 md:grid-cols-2">
               {personalProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
+                <motion.div
+                  key={index}
+                  variants={fadeInUp}
+                >
+                  <ProjectCard {...project} />
+                </motion.div>
               ))}
             </div>
-          </section>
-        </div>
+          </motion.section>
+        </motion.div>
       </div>
     </div>
   );

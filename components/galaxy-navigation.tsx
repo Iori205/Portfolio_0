@@ -66,10 +66,10 @@ function WaveFabric() {
     cvs.width = cvs.height = s;
     const ctx = cvs.getContext("2d")!;
     const g = ctx.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
-    // Warm amber tint to match the new color scheme
-    g.addColorStop(0, "rgba(255,235,210,1)");
-    g.addColorStop(0.35, "rgba(255,225,190,0.85)");
-    g.addColorStop(0.7, "rgba(255,210,170,0.3)");
+    // Indigo/purple-blue tint for Vercel/Linear style
+    g.addColorStop(0, "rgba(200,180,255,1)");
+    g.addColorStop(0.35, "rgba(160,140,255,0.85)");
+    g.addColorStop(0.7, "rgba(120,100,220,0.3)");
     g.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, s, s);
@@ -129,9 +129,9 @@ function WaveFabric() {
     <>
       <lineSegments geometry={lineGeo}>
         <lineBasicMaterial
-          color="#ffe8d0"
+          color="#9080ff"
           transparent
-          opacity={0.25}
+          opacity={0.18}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -142,8 +142,8 @@ function WaveFabric() {
           size={0.14}
           map={dotTexture}
           transparent
-          opacity={0.6}
-          color="#ffd6a5"
+          opacity={0.55}
+          color="#a090ff"
           sizeAttenuation
           blending={THREE.AdditiveBlending}
           depthWrite={false}
@@ -155,15 +155,17 @@ function WaveFabric() {
 
 export function GalaxyNavigation() {
   return (
-    <div className="fixed inset-0 -z-10" style={{ background: "#0a0a0f" }}>
+    <div className="fixed inset-0 -z-10" style={{ background: "#08080f" }}>
       <Canvas
         camera={{ fov: 90 }}
         gl={{ antialias: true, alpha: false }}
-        style={{ width: "100%", height: "100%", background: "#0a0a0f" }}
+        style={{ width: "100%", height: "100%", background: "#08080f" }}
       >
-        <color attach="background" args={["#0a0a0f"]} />
+        <color attach="background" args={["#08080f"]} />
         <WaveFabric />
       </Canvas>
+      {/* Ambient glow overlay */}
+      <div className="ambient-glow" />
     </div>
   );
 }

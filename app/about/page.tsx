@@ -1,26 +1,25 @@
+"use client";
+
 import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import type { Metadata } from "next";
+import { motion } from "framer-motion";
 
-export const metadata: Metadata = {
-  title: "About Me - Background, Education & Timeline",
-  description:
-    "Learn about Baatar-Ochir Sodbilegt, a software engineer focused on full-stack development with React, React Native, and backend API systems.",
-  keywords: [
-    "Baatar-Ochir Sodbilegt",
-    "Sodbilegt",
-    "software engineer",
-    "full-stack developer",
-    "React developer",
-    "Node.js developer",
-    "backend engineer",
-  ],
-  openGraph: {
-    title: "About Baatar-Ochir Sodbilegt - Software Engineer",
-    description:
-      "Software engineer with internship experience delivering full-stack and backend systems using React, Node.js, and PostgreSQL.",
-  },
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+  }
 };
 
 export default function About() {
@@ -31,14 +30,19 @@ export default function About() {
       <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-xl transition-all hover:border-primary/30 hover:bg-primary/10"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <div className="mx-auto max-w-4xl space-y-16">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="mx-auto max-w-4xl space-y-16"
+        >
           {/* Header */}
-          <div className="space-y-4">
+          <motion.div variants={fadeInUp} className="space-y-4">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               Get to Know Me
             </p>
@@ -49,10 +53,10 @@ export default function About() {
               My background, education, and journey
             </p>
             <div className="accent-line w-20" />
-          </div>
+          </motion.div>
 
           {/* Background */}
-          <section className="space-y-6">
+          <motion.section variants={fadeInUp} className="space-y-6">
             <div className="flex items-center gap-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
                 01
@@ -61,7 +65,7 @@ export default function About() {
                 Background
               </h2>
             </div>
-            <div className="glass-card hover-glow space-y-4 rounded-2xl p-8 text-base leading-relaxed text-foreground/90">
+            <div className="glass-card space-y-4 rounded-2xl p-8 text-base leading-relaxed text-foreground/90">
               <p>
                 Full-stack developer focused on building real-world systems used
                 by actual users.
@@ -75,10 +79,10 @@ export default function About() {
                 systems, and solving practical problems.
               </p>
             </div>
-          </section>
+          </motion.section>
 
           {/* Education */}
-          <section className="space-y-6">
+          <motion.section variants={fadeInUp} className="space-y-6">
             <div className="flex items-center gap-4">
               <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
                 02
@@ -88,8 +92,11 @@ export default function About() {
               </h2>
             </div>
             <div className="space-y-4">
-              <div className="glass-card hover-glow relative overflow-hidden rounded-2xl p-6">
-                <div className="absolute left-0 top-0 h-full w-1 bg-primary" />
+              <motion.div 
+                variants={fadeInUp}
+                className="glass-card relative overflow-hidden rounded-2xl p-6"
+              >
+                <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary to-accent" />
                 <div className="pl-4">
                   <h3 className="text-lg font-semibold text-foreground">
                     Software Engineering Program
@@ -103,8 +110,11 @@ export default function About() {
                     environments.
                   </p>
                 </div>
-              </div>
-              <div className="glass-card hover-glow relative overflow-hidden rounded-2xl p-6">
+              </motion.div>
+              <motion.div 
+                variants={fadeInUp}
+                className="glass-card relative overflow-hidden rounded-2xl p-6"
+              >
                 <div className="absolute left-0 top-0 h-full w-1 bg-muted-foreground/30" />
                 <div className="pl-4">
                   <h3 className="text-lg font-semibold text-foreground">
@@ -118,8 +128,11 @@ export default function About() {
                     preparation.
                   </p>
                 </div>
-              </div>
-              <div className="glass-card hover-glow relative overflow-hidden rounded-2xl p-6">
+              </motion.div>
+              <motion.div 
+                variants={fadeInUp}
+                className="glass-card relative overflow-hidden rounded-2xl p-6"
+              >
                 <div className="absolute left-0 top-0 h-full w-1 bg-muted-foreground/30" />
                 <div className="pl-4">
                   <h3 className="text-lg font-semibold text-foreground">
@@ -133,10 +146,10 @@ export default function About() {
                     analytical thinking.
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </div>
-          </section>
-        </div>
+          </motion.section>
+        </motion.div>
       </div>
     </div>
   );

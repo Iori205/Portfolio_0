@@ -12,6 +12,23 @@ import {
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+  }
+};
+
 const socialLinks = [
   {
     name: "LinkedIn",
@@ -41,19 +58,19 @@ export default function ClientInfoPage() {
       <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-xl transition-all hover:border-primary/30 hover:bg-primary/10"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <div className="mx-auto max-w-4xl space-y-12">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="mx-auto max-w-4xl space-y-12"
+        >
           {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-4"
-          >
+          <motion.div variants={fadeInUp} className="space-y-4">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               Get in Touch
             </p>
@@ -68,13 +85,11 @@ export default function ClientInfoPage() {
 
           {/* Resume Download */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-card hover-glow overflow-hidden rounded-2xl p-8"
+            variants={fadeInUp}
+            className="glass-card overflow-hidden rounded-2xl p-8"
           >
             <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 shadow-lg shadow-primary/10">
                 <Download className="h-7 w-7 text-primary" />
               </div>
               <div className="flex-1 space-y-2">
@@ -89,7 +104,7 @@ export default function ClientInfoPage() {
               <a
                 href="/Sodbilegt.pdf"
                 download="Sodbilegt.pdf"
-                className="group flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20"
+                className="btn-glow group flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90"
               >
                 <Download className="h-4 w-4" />
                 Download PDF
@@ -98,12 +113,7 @@ export default function ClientInfoPage() {
           </motion.div>
 
           {/* Social Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-6"
-          >
+          <motion.div variants={fadeInUp} className="space-y-6">
             <h2 className="text-lg font-medium text-foreground">Follow Me</h2>
             <div className="grid gap-4 sm:grid-cols-3">
               {socialLinks.map((social, index) => (
@@ -112,23 +122,21 @@ export default function ClientInfoPage() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                  className="glass-card hover-glow group flex items-center gap-4 rounded-xl p-5 transition-all"
+                  variants={fadeInUp}
+                  className="glass-card group flex items-center gap-4 rounded-xl p-5"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all group-hover:border-primary/30 group-hover:bg-primary/10">
-                    <social.icon className="h-5 w-5 text-muted-foreground transition-colors group-hover:text-primary" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/10 group-hover:shadow-lg group-hover:shadow-primary/20">
+                    <social.icon className="h-5 w-5 text-muted-foreground transition-colors duration-300 group-hover:text-primary" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-medium text-foreground transition-colors group-hover:text-primary">
+                    <h3 className="font-medium text-foreground transition-colors duration-300 group-hover:text-primary">
                       {social.name}
                     </h3>
                     <p className="text-xs text-muted-foreground">
                       {social.description}
                     </p>
                   </div>
-                  <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
+                  <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary" />
                 </motion.a>
               ))}
             </div>
@@ -136,10 +144,8 @@ export default function ClientInfoPage() {
 
           {/* Contact CTA */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className="glass-card hover-glow rounded-2xl p-8 text-center"
+            variants={fadeInUp}
+            className="glass-card rounded-2xl p-8 text-center"
           >
             <h2 className="text-xl font-semibold text-foreground">
               Want to work together?
@@ -151,13 +157,13 @@ export default function ClientInfoPage() {
             </p>
             <a
               href="mailto:sodoos534@gmail.com"
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-foreground transition-all hover:border-primary/30 hover:bg-primary/10 hover:text-primary"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/10"
             >
               <Mail className="h-4 w-4" />
               sodoos534@gmail.com
             </a>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

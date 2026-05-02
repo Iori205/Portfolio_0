@@ -53,6 +53,24 @@ const featuredHobbies = [
   },
 ];
 
+// Animation variants
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+  }
+};
+
 export default function Home() {
   const [formData, setFormData] = useState({
     name: "",
@@ -95,24 +113,24 @@ export default function Home() {
           <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
             {/* Photo */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className="order-2 flex justify-center lg:order-1"
             >
               <div className="group relative">
-                {/* Signature glow ring */}
-                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/20 via-transparent to-primary/5 opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100" />
+                {/* Glow ring */}
+                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/20 via-accent/10 to-transparent opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
                 <div className="relative h-72 w-72 md:h-80 md:w-80 lg:h-[22rem] lg:w-[22rem]">
                   <Image
                     src="#"
                     alt="Baatar-Ochir Sodbilegt - Full-Stack Developer"
                     width={352}
                     height={352}
-                    className="relative h-full w-full rounded-full border border-white/10 object-cover shadow-2xl transition-all duration-700 group-hover:border-primary/20 group-hover:shadow-primary/10"
+                    className="relative h-full w-full rounded-full border border-white/10 object-cover shadow-2xl transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-primary/20"
                     priority
                   />
-                  {/* Corner accent */}
+                  {/* Decorative ring */}
                   <div className="absolute -bottom-2 -right-2 h-16 w-16 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm" />
                 </div>
               </div>
@@ -120,38 +138,38 @@ export default function Home() {
 
             {/* Text */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+              initial="hidden"
+              animate="visible"
+              variants={staggerContainer}
               className="order-1 space-y-8 lg:order-2"
             >
               {/* Status badge */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-primary" />
+              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 backdrop-blur-sm">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-lg shadow-primary/50" />
                 <span className="text-xs font-medium tracking-wide text-primary">
                   Available for work
                 </span>
-              </div>
+              </motion.div>
 
-              <div className="space-y-4">
+              <motion.div variants={fadeInUp} className="space-y-4">
                 <h1 className="text-balance text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
                   Building systems
                   <br />
-                  <span className="text-muted-foreground">that scale</span>
+                  <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">that scale</span>
                 </h1>
 
                 <p className="max-w-lg text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl">
                   Full-stack developer crafting real-world applications with
                   React, Next.js, and Node.js. Code that solves problems.
                 </p>
-              </div>
+              </motion.div>
 
-              {/* Signature accent line */}
-              <div className="accent-line w-24" />
+              {/* Accent line */}
+              <motion.div variants={fadeInUp} className="accent-line w-24" />
 
-              <div className="flex flex-wrap items-center gap-4">
+              <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4">
                 <Link href="/projects">
-                  <Button className="group h-12 gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20">
+                  <Button className="btn-glow group h-12 gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90">
                     View my work
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                   </Button>
@@ -159,27 +177,27 @@ export default function Home() {
                 <Link href="#contact">
                   <Button
                     variant="outline"
-                    className="h-12 rounded-full border-white/10 bg-transparent px-6 text-sm font-medium backdrop-blur-sm transition-all hover:border-white/20 hover:bg-white/5"
+                    className="h-12 rounded-full border-white/10 bg-white/5 px-6 text-sm font-medium backdrop-blur-sm transition-all hover:border-primary/30 hover:bg-primary/5"
                   >
                     Get in touch
                   </Button>
                 </Link>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      <div className="relative z-10 space-y-32 px-6 pb-32">
+      <div className="relative z-10 space-y-40 px-6 pb-32">
         {/* ── FEATURED WORK ── */}
         <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
           className="mx-auto max-w-6xl"
         >
-          <div className="mb-16 flex items-end justify-between">
+          <motion.div variants={fadeInUp} className="mb-16 flex items-end justify-between">
             <div className="space-y-3">
               <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
                 Selected Work
@@ -195,48 +213,41 @@ export default function Home() {
               View all
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
-          </div>
+          </motion.div>
 
           <div className="grid gap-6 md:grid-cols-2">
             {featuredProjects.map((project, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                  ease: [0.23, 1, 0.32, 1],
-                }}
-                viewport={{ once: true }}
+                variants={fadeInUp}
               >
                 <ProjectCard {...project} />
               </motion.div>
             ))}
           </div>
 
-          <div className="mt-8 text-center sm:hidden">
+          <motion.div variants={fadeInUp} className="mt-8 text-center sm:hidden">
             <Link href="/projects">
               <Button
                 variant="outline"
-                className="rounded-full border-white/10 bg-transparent backdrop-blur-sm"
+                className="rounded-full border-white/10 bg-white/5 backdrop-blur-sm"
               >
                 View all projects
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </motion.section>
 
         {/* ── SKILLS ── */}
         <motion.section
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
           className="mx-auto max-w-6xl"
         >
-          <div className="mb-16 space-y-3 text-center">
+          <motion.div variants={fadeInUp} className="mb-16 space-y-3 text-center">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               Technical Stack
             </p>
@@ -246,49 +257,45 @@ export default function Home() {
             <p className="mx-auto max-w-lg text-muted-foreground">
               Technologies I use to build scalable web applications.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid gap-4 md:grid-cols-3">
             {featuredHobbies.map((hobby, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.1,
-                  ease: [0.23, 1, 0.32, 1],
-                }}
-                viewport={{ once: true }}
+                variants={fadeInUp}
               >
                 <HobbyCard {...hobby} />
               </motion.div>
             ))}
           </div>
 
-          <div className="mt-12 text-center">
+          <motion.div variants={fadeInUp} className="mt-12 text-center">
             <Link href="/skills">
               <Button
                 variant="outline"
-                className="rounded-full border-white/10 bg-transparent px-6 backdrop-blur-sm transition-all hover:border-primary/30 hover:bg-primary/5"
+                className="rounded-full border-white/10 bg-white/5 px-6 backdrop-blur-sm transition-all hover:border-primary/30 hover:bg-primary/5"
               >
                 Explore full stack
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </motion.section>
 
         {/* ── CONTACT ── */}
         <motion.section
           id="contact"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
           className="mx-auto max-w-6xl"
         >
-          <div className="overflow-hidden rounded-3xl border border-white/[0.06] bg-gradient-to-br from-white/[0.02] to-transparent p-8 backdrop-blur-xl md:p-12 lg:p-16">
+          <motion.div 
+            variants={fadeInUp}
+            className="glass-card overflow-hidden rounded-3xl p-8 md:p-12 lg:p-16"
+          >
             <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
               {/* LEFT SIDE */}
               <div className="space-y-6">
@@ -298,7 +305,7 @@ export default function Home() {
                 <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
                   Let&apos;s build
                   <br />
-                  <span className="text-muted-foreground">something great</span>
+                  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">something great</span>
                 </h2>
                 <p className="max-w-md text-pretty leading-relaxed text-muted-foreground">
                   I build fast, scalable web applications that solve real
@@ -321,7 +328,7 @@ export default function Home() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary/10"
+                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20"
                       placeholder="Your name"
                     />
                   </div>
@@ -336,7 +343,7 @@ export default function Home() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary/10"
+                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -353,7 +360,7 @@ export default function Home() {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    className="w-full resize-none rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/30 focus:outline-none focus:ring-2 focus:ring-primary/10"
+                    className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20"
                     placeholder="Tell me about your project..."
                   />
                 </div>
@@ -361,13 +368,13 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group w-full rounded-xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="btn-glow group w-full rounded-xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {isSubmitting ? "Sending..." : "Send message"}
                 </button>
               </form>
             </div>
-          </div>
+          </motion.div>
         </motion.section>
       </div>
     </div>

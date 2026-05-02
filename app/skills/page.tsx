@@ -1,29 +1,26 @@
-import type { Metadata } from "next";
+"use client";
+
 import { HobbyCard } from "@/components/hobby-card";
 import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
 
-export const metadata: Metadata = {
-  title: "Skills & Knowledge | Baatar-Ochir Sodbilegt",
-  description:
-    "Explore Baatar-Ochir Sodbilegt's engineering skills and technical stack",
-  keywords: [
-    "Sodbilegt skills",
-    "software engineer skills",
-    "full-stack skills",
-    "React developer",
-    "Node.js developer",
-    "backend development",
-  ],
-  openGraph: {
-    title: "Skills & Knowledge | Baatar-Ochir Sodbilegt",
-    description: "What Can I Do For You",
-    url: `${siteUrl}/skills`,
-    type: "profile",
-  },
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
+  }
 };
 
 export default function SkillsPage() {
@@ -87,14 +84,19 @@ export default function SkillsPage() {
       <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-xl transition-all hover:border-primary/30 hover:bg-primary/10"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <div className="mx-auto max-w-6xl space-y-12">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="mx-auto max-w-6xl space-y-12"
+        >
           {/* Header */}
-          <div className="space-y-4">
+          <motion.div variants={fadeInUp} className="space-y-4">
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
               Technical Stack
             </p>
@@ -105,14 +107,19 @@ export default function SkillsPage() {
               What I build and how I can contribute.
             </p>
             <div className="accent-line w-20" />
-          </div>
+          </motion.div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {hobbies.map((hobby, index) => (
-              <HobbyCard key={index} {...hobby} />
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+              >
+                <HobbyCard {...hobby} />
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
