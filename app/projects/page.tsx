@@ -49,11 +49,6 @@ export default function Projects() {
       link: "#",
     },
   ];
-  const financeProjects: ProjectItem[] = [];
-
-  const marketingProjects: ProjectItem[] = [];
-
-  const designProjects: ProjectItem[] = [];
 
   const personalProjects: ProjectItem[] = [
     {
@@ -70,71 +65,57 @@ export default function Projects() {
     <div className="relative min-h-screen">
       <GalaxyNavigation />
 
-      <div className="relative z-10 py-20 px-4">
+      <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed top-8 left-8 glass-card p-3 rounded-full hover:scale-110 transition-transform z-20"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-xl transition-all hover:border-primary/30 hover:bg-primary/10"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <div className="max-w-6xl mx-auto space-y-16">
-          <div className="space-y-4 text-center">
-            <h1 className="text-5xl md:text-6xl font-bold bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent text-foreground">
+        <div className="mx-auto max-w-6xl space-y-16">
+          {/* Header */}
+          <div className="space-y-4">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+              Portfolio
+            </p>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               Projects
             </h1>
-            <p className="text-xl text-balance text-foreground">
+            <p className="max-w-lg text-lg text-muted-foreground">
               A showcase of my internship and engineering work
             </p>
+            <div className="accent-line w-20" />
           </div>
 
+          {/* Web Development */}
           <section className="space-y-8">
-            <h2 className="text-3xl font-bold text-primary">Web Development</h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex items-center gap-4">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
+                01
+              </span>
+              <h2 className="text-2xl font-semibold text-foreground">
+                Web Development
+              </h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2">
               {itProjects.map((project, index) => (
                 <ProjectCard key={index} {...project} />
               ))}
             </div>
           </section>
-          {/* 
+
+          {/* Mobile Development */}
           <section className="space-y-8">
-            <h2 className="text-3xl font-bold text-foreground">
-              Finance Projects
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {financeProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
-              ))}
+            <div className="flex items-center gap-4">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
+                02
+              </span>
+              <h2 className="text-2xl font-semibold text-foreground">
+                Mobile Development
+              </h2>
             </div>
-          </section> */}
-
-          {/* <section className="space-y-8">
-            <h2 className="text-3xl font-bold text-foreground">
-              Marketing Projects
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {marketingProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
-              ))}
-            </div>
-          </section> */}
-
-          {/* <section className="space-y-8">
-            <h2 className="text-3xl font-bold text-foreground">
-              Design & Architecture
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {designProjects.map((project, index) => (
-                <ProjectCard key={index} {...project} />
-              ))}
-            </div>
-          </section> */}
-
-          <section className="space-y-8">
-            <h2 className="text-3xl font-bold text-foreground">
-              Mobile Development
-            </h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid gap-6 md:grid-cols-2">
               {personalProjects.map((project, index) => (
                 <ProjectCard key={index} {...project} />
               ))}

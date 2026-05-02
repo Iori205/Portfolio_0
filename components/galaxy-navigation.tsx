@@ -66,9 +66,10 @@ function WaveFabric() {
     cvs.width = cvs.height = s;
     const ctx = cvs.getContext("2d")!;
     const g = ctx.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
-    g.addColorStop(0, "rgba(255,255,255,1)");
-    g.addColorStop(0.35, "rgba(255,255,255,0.85)");
-    g.addColorStop(0.7, "rgba(220,230,255,0.3)");
+    // Warm amber tint to match the new color scheme
+    g.addColorStop(0, "rgba(255,235,210,1)");
+    g.addColorStop(0.35, "rgba(255,225,190,0.85)");
+    g.addColorStop(0.7, "rgba(255,210,170,0.3)");
     g.addColorStop(1, "rgba(0,0,0,0)");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, s, s);
@@ -128,9 +129,9 @@ function WaveFabric() {
     <>
       <lineSegments geometry={lineGeo}>
         <lineBasicMaterial
-          color="#ffffff"
+          color="#ffe8d0"
           transparent
-          opacity={0.4}
+          opacity={0.25}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
         />
@@ -141,8 +142,8 @@ function WaveFabric() {
           size={0.14}
           map={dotTexture}
           transparent
-          opacity={0.7}
-          color="#ffffff"
+          opacity={0.6}
+          color="#ffd6a5"
           sizeAttenuation
           blending={THREE.AdditiveBlending}
           depthWrite={false}
@@ -154,13 +155,13 @@ function WaveFabric() {
 
 export function GalaxyNavigation() {
   return (
-    <div className="fixed inset-0 -z-10" style={{ background: "#000000" }}>
+    <div className="fixed inset-0 -z-10" style={{ background: "#0a0a0f" }}>
       <Canvas
         camera={{ fov: 90 }}
         gl={{ antialias: true, alpha: false }}
-        style={{ width: "100%", height: "100%", background: "#000000" }}
+        style={{ width: "100%", height: "100%", background: "#0a0a0f" }}
       >
-        <color attach="background" args={["#000000"]} />
+        <color attach="background" args={["#0a0a0f"]} />
         <WaveFabric />
       </Canvas>
     </div>

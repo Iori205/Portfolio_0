@@ -92,12 +92,10 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`font-sans ${inter.variable} ${jetbrainsMono.variable}`}>
-
-          <Navbar />
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-
+    <html lang="en" className="dark bg-background">
+      <body className={`font-sans antialiased ${inter.variable} ${jetbrainsMono.variable}`}>
+        <Navbar />
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>{children}</Suspense>
         <Analytics />
       </body>
     </html>

@@ -31,51 +31,51 @@ export default function SkillsPage() {
     {
       title: "Programming Languages",
       description: "JavaScript, TypeScript, HTML, CSS",
-      icon: "",
+      icon: "01",
       link: "#",
     },
     {
       title: "Frameworks & Libraries",
       description: "React, Next.js, Node.js, Express, React Native, Shadcn UI",
-      icon: "",
+      icon: "02",
       link: "#",
     },
     {
       title: "Database / API",
       description: "PostgreSQL, MongoDB, Prisma, REST APIs, GraphQL",
-      icon: "",
+      icon: "03",
       link: "#",
     },
     {
       title: "Tools",
       description: "GitHub, Vercel, Clerk (Auth), Drizzle, Husky",
-      icon: "",
+      icon: "04",
       link: "#",
     },
     {
       title: "Testing",
       description: "Cypress (E2E), Jest (Unit), K6",
-      icon: "",
+      icon: "05",
       link: "#",
     },
     {
       title: "Languages",
       description: "English (working proficiency), Korean (TOPIK 3)",
-      icon: "",
+      icon: "06",
       link: "#",
     },
     {
       title: "Core Profile",
       description:
         "Full-stack developer building scalable web applications with a focus on clean architecture and real user impact.",
-      icon: "",
+      icon: "07",
       link: "#",
     },
     {
       title: "Focus",
       description:
         "Building dashboards, admin systems, and data-driven platforms that solve real user problems.",
-      icon: "",
+      icon: "08",
       link: "#",
     },
   ];
@@ -84,25 +84,30 @@ export default function SkillsPage() {
     <div className="relative min-h-screen">
       <GalaxyNavigation />
 
-      <div className="relative z-10 py-20 px-4">
+      <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed top-8 left-8 glass-card p-3 rounded-full hover:scale-110 transition-transform z-20"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-xl transition-all hover:border-primary/30 hover:bg-primary/10"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="space-y-4 text-center">
-            <h1 className="text-3xl md:text-6xl font-bold bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent text-foreground">
+        <div className="mx-auto max-w-6xl space-y-12">
+          {/* Header */}
+          <div className="space-y-4">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+              Technical Stack
+            </p>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               Skills & Interests
             </h1>
-            <p className="text-xl text-foreground">
+            <p className="max-w-lg text-lg text-muted-foreground">
               What I build and how I can contribute.
             </p>
+            <div className="accent-line w-20" />
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {hobbies.map((hobby, index) => (
               <HobbyCard key={index} {...hobby} />
             ))}

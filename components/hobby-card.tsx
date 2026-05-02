@@ -1,25 +1,32 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
+import Link from "next/link";
 
 interface HobbyCardProps {
-  title: string
-  description: string
-  icon: string
-  link: string
+  title: string;
+  description: string;
+  icon: string;
+  link: string;
 }
 
-export function HobbyCard({ title, description, icon, link }: HobbyCardProps) {
+export function HobbyCard({ title, description, icon }: HobbyCardProps) {
   return (
-    <Link href={link}>
-      <Card className="glass-card group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] h-full border-border/50">
-        <CardHeader>
-          <div className="text-4xl mb-2">{icon}</div>
-          <CardTitle className="group-hover:text-primary transition-colors">{title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CardDescription className="leading-relaxed">{description}</CardDescription>
-        </CardContent>
-      </Card>
-    </Link>
-  )
+    <article className="glass-card hover-glow group relative h-full rounded-2xl p-6 transition-all duration-500">
+      {/* Number indicator */}
+      <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary transition-all group-hover:border-primary/40 group-hover:bg-primary/10">
+        {icon}
+      </div>
+
+      {/* Content */}
+      <div className="space-y-2">
+        <h3 className="font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary">
+          {title}
+        </h3>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </p>
+      </div>
+
+      {/* Subtle accent line */}
+      <div className="absolute bottom-6 left-6 h-0.5 w-8 rounded-full bg-primary/30 opacity-0 transition-all duration-500 group-hover:w-12 group-hover:opacity-100" />
+    </article>
+  );
 }

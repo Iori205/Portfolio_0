@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
-import Image from "next/image";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -13,41 +12,42 @@ export function Navbar() {
 
   const links = [
     { href: "/", label: "Home" },
-    { href: "/about", label: "About Me" },
-    { href: "/projects", label: "Projects" },
-    { href: "/skills", label: "My Skills" },
+    { href: "/about", label: "About" },
+    { href: "/projects", label: "Work" },
+    { href: "/skills", label: "Stack" },
     { href: "/contact", label: "Contact" },
   ];
 
   return (
-    <nav className="fixed top-0 z-50 w-full glass-card border-b border-blue-500/20 backdrop-blur-xl">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <Image
-              src="#"
-              alt="IoRi"
-              width={120}
-              height={40}
-              className="h-8 w-auto group-hover:scale-105 transition-transform"
-            />
+    <nav className="fixed top-0 z-50 w-full">
+      <div className="mx-auto max-w-6xl px-6 py-4">
+        <div className="flex h-12 items-center justify-between rounded-full border border-white/[0.06] bg-black/40 px-6 backdrop-blur-xl">
+          {/* Logo / Name */}
+          <Link href="/" className="group flex items-center gap-3">
+            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary transition-all group-hover:bg-primary group-hover:text-primary-foreground">
+              B
+            </span>
+            <span className="hidden text-sm font-medium tracking-tight text-foreground/90 sm:block">
+              Baatar-Ochir
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden items-center gap-1 md:flex">
             {links.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium transition-all hover:text-primary relative group ${
-                  pathname === link.href ? "text-primary" : "text-foreground"
+                className={`relative px-4 py-2 text-sm font-medium transition-colors ${
+                  pathname === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {link.label}
                 {pathname === link.href && (
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full" />
+                  <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-primary" />
                 )}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-secondary to-accent rounded-full group-hover:w-full transition-all duration-300" />
               </Link>
             ))}
           </div>
@@ -56,30 +56,32 @@ export function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden text-white hover:bg-primary/10"
+            className="text-foreground hover:bg-white/5 md:hidden"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
         </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden py-4 space-y-2">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                className={`block px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                  pathname === link.href
-                    ? "bg-gradient-to-r from-primary/20 to-secondary/20 text-primary border text-white/30"
-                    : "text-foreground hover:bg-primary/10 hover:text-primary"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+          <div className="mt-2 rounded-2xl border border-white/[0.06] bg-black/60 p-4 backdrop-blur-xl md:hidden">
+            <div className="flex flex-col gap-1">
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`rounded-lg px-4 py-3 text-sm font-medium transition-colors ${
+                    pathname === link.href
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
         )}
       </div>
