@@ -1,6 +1,5 @@
 "use client";
 
-import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import {
   ArrowLeft,
   Linkedin,
@@ -52,13 +51,11 @@ const socialLinks = [
 
 export default function ClientInfoPage() {
   return (
-    <div className="relative min-h-screen">
-      <GalaxyNavigation />
-
+    <div className="relative min-h-screen bg-gradient-subtle">
       <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all duration-300 hover:bg-muted"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
@@ -71,25 +68,24 @@ export default function ClientInfoPage() {
         >
           {/* Header */}
           <motion.div variants={fadeInUp} className="space-y-4">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            <span className="text-sm font-medium uppercase tracking-[0.15em] text-muted-foreground">
               Get in Touch
-            </p>
+            </span>
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               Connect With Me
             </h1>
             <p className="max-w-lg text-lg text-muted-foreground">
               Find me on social media or download my resume
             </p>
-            <div className="accent-line w-20" />
           </motion.div>
 
           {/* Resume Download */}
           <motion.div
             variants={fadeInUp}
-            className="glass-card overflow-hidden rounded-2xl p-8"
+            className="premium-card overflow-hidden rounded-2xl p-8"
           >
             <div className="flex flex-col items-center gap-6 text-center sm:flex-row sm:text-left">
-              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 shadow-lg shadow-primary/10">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-primary/10">
                 <Download className="h-7 w-7 text-primary" />
               </div>
               <div className="flex-1 space-y-2">
@@ -104,7 +100,7 @@ export default function ClientInfoPage() {
               <a
                 href="/Sodbilegt.pdf"
                 download="Sodbilegt.pdf"
-                className="btn-glow group flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90"
+                className="cta-button flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold"
               >
                 <Download className="h-4 w-4" />
                 Download PDF
@@ -116,16 +112,16 @@ export default function ClientInfoPage() {
           <motion.div variants={fadeInUp} className="space-y-6">
             <h2 className="text-lg font-medium text-foreground">Follow Me</h2>
             <div className="grid gap-4 sm:grid-cols-3">
-              {socialLinks.map((social, index) => (
+              {socialLinks.map((social) => (
                 <motion.a
                   key={social.name}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   variants={fadeInUp}
-                  className="glass-card group flex items-center gap-4 rounded-xl p-5"
+                  className="premium-card group flex items-center gap-4 rounded-xl p-5"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all duration-300 group-hover:border-primary/40 group-hover:bg-primary/10 group-hover:shadow-lg group-hover:shadow-primary/20">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted transition-all duration-300 group-hover:bg-primary/10">
                     <social.icon className="h-5 w-5 text-muted-foreground transition-colors duration-300 group-hover:text-primary" />
                   </div>
                   <div className="flex-1">
@@ -145,7 +141,7 @@ export default function ClientInfoPage() {
           {/* Contact CTA */}
           <motion.div
             variants={fadeInUp}
-            className="glass-card rounded-2xl p-8 text-center"
+            className="premium-card rounded-2xl p-8 text-center"
           >
             <h2 className="text-xl font-semibold text-foreground">
               Want to work together?
@@ -157,7 +153,7 @@ export default function ClientInfoPage() {
             </p>
             <a
               href="mailto:sodoos534@gmail.com"
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:text-primary hover:shadow-lg hover:shadow-primary/10"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-foreground/20 bg-transparent px-6 py-3 text-sm font-medium text-foreground transition-all duration-300 hover:bg-foreground hover:text-background"
             >
               <Mail className="h-4 w-4" />
               sodoos534@gmail.com

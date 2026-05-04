@@ -1,6 +1,5 @@
 "use client";
 
-import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -24,13 +23,11 @@ const staggerContainer = {
 
 export default function About() {
   return (
-    <div className="relative min-h-screen">
-      <GalaxyNavigation />
-
+    <div className="relative min-h-screen bg-gradient-subtle">
       <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all duration-300 hover:bg-muted"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
@@ -43,29 +40,23 @@ export default function About() {
         >
           {/* Header */}
           <motion.div variants={fadeInUp} className="space-y-4">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            <span className="text-sm font-medium uppercase tracking-[0.15em] text-muted-foreground">
               Get to Know Me
-            </p>
+            </span>
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               About Me
             </h1>
             <p className="max-w-lg text-lg text-muted-foreground">
               My background, education, and journey
             </p>
-            <div className="accent-line w-20" />
           </motion.div>
 
           {/* Background */}
           <motion.section variants={fadeInUp} className="space-y-6">
-            <div className="flex items-center gap-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
-                01
-              </span>
-              <h2 className="text-2xl font-semibold text-foreground">
-                Background
-              </h2>
-            </div>
-            <div className="glass-card space-y-4 rounded-2xl p-8 text-base leading-relaxed text-foreground/90">
+            <h2 className="text-2xl font-semibold text-foreground">
+              Background
+            </h2>
+            <div className="premium-card space-y-4 rounded-2xl p-8 text-base leading-relaxed text-muted-foreground">
               <p>
                 Full-stack developer focused on building real-world systems used
                 by actual users.
@@ -83,20 +74,15 @@ export default function About() {
 
           {/* Education */}
           <motion.section variants={fadeInUp} className="space-y-6">
-            <div className="flex items-center gap-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
-                02
-              </span>
-              <h2 className="text-2xl font-semibold text-foreground">
-                Education
-              </h2>
-            </div>
+            <h2 className="text-2xl font-semibold text-foreground">
+              Education
+            </h2>
             <div className="space-y-4">
               <motion.div 
                 variants={fadeInUp}
-                className="glass-card relative overflow-hidden rounded-2xl p-6"
+                className="premium-card relative overflow-hidden rounded-2xl p-6"
               >
-                <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-primary to-accent" />
+                <div className="absolute left-0 top-0 h-full w-1 bg-primary" />
                 <div className="pl-4">
                   <h3 className="text-lg font-semibold text-foreground">
                     Software Engineering Program
@@ -104,7 +90,7 @@ export default function About() {
                   <p className="mt-1 text-sm text-muted-foreground">
                     Pinecone Academy - 2025 - 2026
                   </p>
-                  <p className="mt-3 text-foreground/80">
+                  <p className="mt-3 text-muted-foreground">
                     Focused on building full-stack applications, backend
                     systems, and scalable architecture used in real-world
                     environments.
@@ -113,9 +99,9 @@ export default function About() {
               </motion.div>
               <motion.div 
                 variants={fadeInUp}
-                className="glass-card relative overflow-hidden rounded-2xl p-6"
+                className="premium-card relative overflow-hidden rounded-2xl p-6"
               >
-                <div className="absolute left-0 top-0 h-full w-1 bg-muted-foreground/30" />
+                <div className="absolute left-0 top-0 h-full w-1 bg-border" />
                 <div className="pl-4">
                   <h3 className="text-lg font-semibold text-foreground">
                     Language Preparation
@@ -123,7 +109,7 @@ export default function About() {
                   <p className="mt-1 text-sm text-muted-foreground">
                     Joongbu University - 2022 - 2024
                   </p>
-                  <p className="mt-3 text-foreground/80">
+                  <p className="mt-3 text-muted-foreground">
                     Focused on academic language skills and international study
                     preparation.
                   </p>
@@ -131,9 +117,9 @@ export default function About() {
               </motion.div>
               <motion.div 
                 variants={fadeInUp}
-                className="glass-card relative overflow-hidden rounded-2xl p-6"
+                className="premium-card relative overflow-hidden rounded-2xl p-6"
               >
-                <div className="absolute left-0 top-0 h-full w-1 bg-muted-foreground/30" />
+                <div className="absolute left-0 top-0 h-full w-1 bg-border" />
                 <div className="pl-4">
                   <h3 className="text-lg font-semibold text-foreground">
                     Finance Management
@@ -141,7 +127,7 @@ export default function About() {
                   <p className="mt-1 text-sm text-muted-foreground">
                     Mandakh University - 2020 - 2022
                   </p>
-                  <p className="mt-3 text-foreground/80">
+                  <p className="mt-3 text-muted-foreground">
                     Studied finance fundamentals, business systems, and
                     analytical thinking.
                   </p>

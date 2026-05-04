@@ -7,9 +7,8 @@ import { Suspense } from "react"
 import { Navbar } from "@/components/navbar"
 import { ScrollProgress } from "@/components/scroll-progress"
 
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
-const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
+const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains-mono" })
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://your-domain.com"),
@@ -93,11 +92,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="dark bg-background">
+    <html lang="en" className="bg-background">
       <body className={`font-sans antialiased ${inter.variable} ${jetbrainsMono.variable}`}>
         <ScrollProgress />
         <Navbar />
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>{children}</Suspense>
+        <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading...</div>}>
+          {children}
+        </Suspense>
         <Analytics />
       </body>
     </html>

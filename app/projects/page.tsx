@@ -1,10 +1,10 @@
 "use client";
 
-import { ProjectCard } from "@/components/project-card";
-import { GalaxyNavigation } from "@/components/galaxy-navigation";
-import { ArrowLeft } from "lucide-react";
+import { ProjectCard, ProjectListItem } from "@/components/project-card";
+import { ArrowLeft, LayoutGrid, List } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 type ProjectItem = {
   title: string;
@@ -27,49 +27,47 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
   }
 };
 
 export default function Projects() {
-  const itProjects: ProjectItem[] = [
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  const allProjects: ProjectItem[] = [
     {
-      title: "Unifind (Intern)",
+      title: "Unifind",
       description:
-        "Built a full-stack B6 platform using React, Next.js, and Node.js. Implemented authentication and role-based access control while improving overall user experience.",
+        "Built a full-stack platform using React, Next.js, and Node.js. Implemented authentication and role-based access control while improving overall user experience.",
       category: "Full-Stack",
       tags: ["React", "Next.js", "Node.js", "RBAC", "UI/UX"],
       link: "https://unifind-ruddy.vercel.app/",
     },
     {
-      title: "UniExam (Intern)",
+      title: "UniExam",
       description:
-        "Worked on backend development for a scalable REST API using AWS SQS asynchronous processing, Upstash Redis caching, and task queue handling. Improved processing speed and service reliability.",
+        "Worked on backend development for a scalable REST API using AWS SQS asynchronous processing, Upstash Redis caching, and task queue handling.",
       category: "Backend",
       tags: ["REST API", "AWS SQS", "Upstash Redis", "Scalability"],
       link: "#",
     },
-  ];
-
-  const personalProjects: ProjectItem[] = [
     {
-      title: "ReferU (Intern)",
+      title: "ReferU",
       description:
-        "Developed backend and REST API services for a referral management platform with Node.js, Express, and PostgreSQL. Strengthened authentication, role-based access control, and API validation.",
-      category: "Personal",
+        "Developed backend and REST API services for a referral management platform with Node.js, Express, and PostgreSQL.",
+      category: "Backend",
       tags: ["Node.js", "Express", "PostgreSQL", "Validation", "RBAC"],
       link: "#",
     },
   ];
 
   return (
-    <div className="relative min-h-screen">
-      <GalaxyNavigation />
-
+    <div className="relative min-h-screen bg-gradient-subtle">
       <div className="relative z-10 px-6 pb-20 pt-32">
+        {/* Back button */}
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all duration-300 hover:bg-muted"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
@@ -78,34 +76,47 @@ export default function Projects() {
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
-          className="mx-auto max-w-6xl space-y-16"
+          className="mx-auto max-w-6xl"
         >
-          {/* Header */}
-          <motion.div variants={fadeInUp} className="space-y-4">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              Portfolio
-            </p>
-            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
-              Projects
-            </h1>
-            <p className="max-w-lg text-lg text-muted-foreground">
-              A showcase of my internship and engineering work
-            </p>
-            <div className="accent-line w-20" />
+          {/* Header with view toggle */}
+          <motion.div 
+            variants={fadeInUp} 
+            className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end"
+          >
+            <div>
+              <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+                Selected Projects
+                <sup className="ml-1 text-lg text-muted-foreground">({allProjects.length})</sup>
+              </h1>
+            </div>
+
+            {/* View toggle */}
+            <div className="toggle-group flex rounded-full p-1">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`toggle-btn flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
+                  viewMode === "grid" ? "active" : "text-muted-foreground"
+                }`}
+              >
+                <LayoutGrid className="h-4 w-4" />
+                Grid
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={`toggle-btn flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium ${
+                  viewMode === "list" ? "active" : "text-muted-foreground"
+                }`}
+              >
+                <List className="h-4 w-4" />
+                List
+              </button>
+            </div>
           </motion.div>
 
-          {/* Web Development */}
-          <motion.section variants={fadeInUp} className="space-y-8">
-            <div className="flex items-center gap-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
-                01
-              </span>
-              <h2 className="text-2xl font-semibold text-foreground">
-                Web Development
-              </h2>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {itProjects.map((project, index) => (
+          {/* Projects */}
+          {viewMode === "grid" ? (
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {allProjects.map((project, index) => (
                 <motion.div
                   key={index}
                   variants={fadeInUp}
@@ -114,29 +125,19 @@ export default function Projects() {
                 </motion.div>
               ))}
             </div>
-          </motion.section>
-
-          {/* Mobile Development */}
-          <motion.section variants={fadeInUp} className="space-y-8">
-            <div className="flex items-center gap-4">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full border border-primary/20 bg-primary/5 text-sm font-medium text-primary">
-                02
-              </span>
-              <h2 className="text-2xl font-semibold text-foreground">
-                Mobile Development
-              </h2>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {personalProjects.map((project, index) => (
+          ) : (
+            <div className="premium-card rounded-2xl">
+              {allProjects.map((project, index) => (
                 <motion.div
                   key={index}
                   variants={fadeInUp}
+                  className="px-6"
                 >
-                  <ProjectCard {...project} />
+                  <ProjectListItem {...project} />
                 </motion.div>
               ))}
             </div>
-          </motion.section>
+          )}
         </motion.div>
       </div>
     </div>

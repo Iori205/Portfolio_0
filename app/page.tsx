@@ -1,65 +1,65 @@
 "use client";
 
 import type React from "react";
-import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ProjectCard } from "@/components/project-card";
-import { HobbyCard } from "@/components/hobby-card";
-import { ArrowRight, ArrowUpRight, Check, AlertCircle } from "lucide-react";
+import { ArrowUpRight, Check, AlertCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { sendEmail } from "@/app/actions/send-email";
 
 const featuredProjects = [
   {
-    title: "Unifind (Intern)",
+    title: "Unifind",
     description:
-      "Developed a full-stack platform using React, Next.js, and Node.js, implementing authentication and role-based access control to improve user experience and system security.",
+      "Full-stack platform using React, Next.js, and Node.js with authentication and role-based access control.",
     category: "Full-Stack",
-    tags: ["React", "Next.js", "Node.js", "RBAC", "UI/UX"],
+    tags: ["React", "Next.js", "Node.js", "RBAC"],
     link: "https://unifind-ruddy.vercel.app/",
+    image: "/project-unifind.jpg",
   },
   {
-    title: "UniExam (Intern)",
+    title: "UniExam",
     description:
-      "Built scalable backend services using REST APIs, AWS SQS, and Redis caching, improving processing speed and system reliability.",
+      "Scalable backend services using REST APIs, AWS SQS, and Redis caching for improved processing speed.",
     category: "Backend",
-    tags: ["REST API", "AWS SQS", "Upstash Redis", "Scalability"],
+    tags: ["REST API", "AWS SQS", "Upstash Redis"],
     link: "#",
+    image: "/project-uniexam.jpg",
+  },
+  {
+    title: "ReferU",
+    description:
+      "Backend and REST API services for referral management with Node.js, Express, and PostgreSQL.",
+    category: "Backend",
+    tags: ["Node.js", "Express", "PostgreSQL"],
+    link: "#",
+    image: "/project-referu.jpg",
   },
 ];
 
-const featuredHobbies = [
-  {
-    title: "Core Languages",
-    description: "JavaScript, TypeScript, HTML, CSS",
-    icon: "01",
-    link: "#",
-  },
-  {
-    title: "Frameworks & Tools",
-    description:
-      "React, Next.js, Node.js, Express, React Native, UI: Shadcn UI",
-    icon: "02",
-    link: "#",
-  },
-  {
-    title: "Backend & Databases",
-    description: "PostgreSQL, MongoDB, Prisma, REST APIs, GraphQL",
-    icon: "03",
-    link: "#",
-  },
+const trustedBy = [
+  { name: "Unifind", logo: "U" },
+  { name: "UniExam", logo: "E" },
+  { name: "ReferU", logo: "R" },
 ];
 
 // Animation variants
+const fadeIn = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+  }
+};
+
 const fadeInUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 40 },
   visible: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
   }
 };
 
@@ -67,11 +67,32 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+    transition: { staggerChildren: 0.15, delayChildren: 0.2 }
   }
 };
 
 type FormStatus = "idle" | "success" | "error";
+
+// Scroll-based text reveal component
+function ScrollText({ children, className }: { children: string; className?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start 0.9", "start 0.4"]
+  });
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.15, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [20, 0]);
+
+  return (
+    <motion.span
+      ref={ref}
+      style={{ opacity, y }}
+      className={className}
+    >
+      {children}
+    </motion.span>
+  );
+}
 
 export default function Home() {
   const [formData, setFormData] = useState({
@@ -91,7 +112,6 @@ export default function Home() {
       if (result.success) {
         setFormStatus("success");
         setFormData({ name: "", email: "", message: "" });
-        // Auto-hide success message after 5 seconds
         setTimeout(() => setFormStatus("idle"), 5000);
       } else {
         setFormStatus("error");
@@ -105,123 +125,175 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
-      {/* Background */}
-      <GalaxyNavigation />
-
+    <div className="relative min-h-screen bg-gradient-subtle">
       {/* ── HERO ── */}
-      <section className="relative z-10 flex min-h-screen items-center justify-center px-6 py-32 md:py-20">
-        <div className="mx-auto w-full max-w-6xl">
-          <div className="grid items-center gap-16 lg:grid-cols-2 lg:gap-24">
-            {/* Photo - shows first on mobile, second on desktop */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="flex justify-center lg:order-1"
-            >
-              <div className="group relative">
-                {/* Pulsing ring around photo */}
-                <div className="pulse-ring absolute -inset-3 rounded-full border-2 border-primary/30" />
-                <div className="pulse-ring absolute -inset-5 rounded-full border border-primary/20" style={{ animationDelay: "1s" }} />
-                
-                {/* Glow ring on hover */}
-                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-primary/20 via-accent/10 to-transparent opacity-0 blur-3xl transition-opacity duration-700 group-hover:opacity-100" />
-                <div className="relative h-72 w-72 md:h-80 md:w-80 lg:h-[22rem] lg:w-[22rem]">
-                  <Image
-                    src="#"
-                    alt="Baatar-Ochir Sodbilegt - Full-Stack Developer"
-                    width={352}
-                    height={352}
-                    className="relative h-full w-full rounded-full border border-white/10 object-cover shadow-2xl transition-all duration-500 group-hover:border-primary/30 group-hover:shadow-primary/20"
-                    priority
-                  />
-                  {/* Decorative ring */}
-                  <div className="absolute -bottom-2 -right-2 h-16 w-16 rounded-full border border-primary/30 bg-primary/5 backdrop-blur-sm" />
+      <section className="relative min-h-screen overflow-hidden px-6 pt-32 pb-20">
+        {/* Floating project cards - decorative */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="floating-card absolute left-[5%] top-[20%] hidden w-48 rotate-[-8deg] rounded-xl bg-card p-2 shadow-xl lg:block"
+            style={{ "--rotate": "-8deg" } as React.CSSProperties}
+          >
+            <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-muted to-muted/50" />
+            <p className="mt-2 text-xs font-medium text-foreground">Unifind</p>
+            <p className="text-[10px] text-muted-foreground">Full-Stack Platform</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="floating-card absolute right-[8%] top-[25%] hidden w-44 rotate-[6deg] rounded-xl bg-card p-2 shadow-xl lg:block"
+            style={{ "--rotate": "6deg", animationDelay: "2s" } as React.CSSProperties}
+          >
+            <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-primary/10 to-primary/5" />
+            <p className="mt-2 text-xs font-medium text-foreground">UniExam</p>
+            <p className="text-[10px] text-muted-foreground">Backend Services</p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            className="floating-card absolute bottom-[15%] left-[10%] hidden w-40 rotate-[4deg] rounded-xl bg-card p-2 shadow-xl lg:block"
+            style={{ "--rotate": "4deg", animationDelay: "4s" } as React.CSSProperties}
+          >
+            <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-muted to-muted/50" />
+            <p className="mt-2 text-xs font-medium text-foreground">ReferU</p>
+            <p className="text-[10px] text-muted-foreground">API Services</p>
+          </motion.div>
+        </div>
+
+        {/* Main hero content */}
+        <div className="relative z-10 mx-auto max-w-4xl">
+          {/* Trusted by */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mb-6 flex items-center justify-center gap-2"
+          >
+            <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              Worked with
+            </span>
+            <div className="flex items-center gap-3 ml-4">
+              {trustedBy.map((company) => (
+                <div
+                  key={company.name}
+                  className="flex h-7 w-7 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground"
+                >
+                  {company.logo}
                 </div>
-              </div>
-            </motion.div>
+              ))}
+            </div>
+          </motion.div>
 
-            {/* Text - shows second on mobile, first on desktop */}
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={staggerContainer}
-              className="space-y-8 lg:order-2"
+          {/* Status badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mb-8 flex justify-center"
+          >
+            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
+              </span>
+              <span className="text-sm font-medium text-primary">
+                Available June 2026
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Main headline */}
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={staggerContainer}
+            className="text-center"
+          >
+            <motion.h1 
+              variants={fadeInUp}
+              className="mx-auto max-w-3xl text-balance text-4xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl"
             >
-              {/* Status badge */}
-              <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 backdrop-blur-sm">
-                <span className="h-2 w-2 animate-pulse rounded-full bg-primary shadow-lg shadow-primary/50" />
-                <span className="text-xs font-medium tracking-wide text-primary">
-                  Available for work
-                </span>
-              </motion.div>
+              I build modern web applications that{" "}
+              <span className="bg-gradient-to-r from-primary via-primary to-primary/70 bg-clip-text text-transparent">
+                scale with your business
+              </span>
+            </motion.h1>
 
-              <motion.div variants={fadeInUp} className="space-y-4">
-                <h1 className="text-balance text-4xl font-bold leading-[1.1] tracking-tight text-foreground md:text-5xl lg:text-6xl">
-                  Building systems
-                  <br />
-                  <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">that scale</span>
-                </h1>
+            <motion.p 
+              variants={fadeInUp}
+              className="mx-auto mt-8 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl"
+            >
+              Full-stack developer specializing in React, Next.js, and Node.js. 
+              Code that solves real problems.
+            </motion.p>
 
-                <p className="max-w-lg text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl">
-                  Full-stack developer crafting real-world applications with
-                  React, Next.js, and Node.js. Code that solves problems.
-                </p>
-              </motion.div>
-
-              {/* Accent line */}
-              <motion.div variants={fadeInUp} className="accent-line w-24" />
-
-              <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-4">
-                <Link href="/projects">
-                  <Button className="btn-glow group h-12 gap-2 rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90">
-                    View my work
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  </Button>
-                </Link>
-                <Link href="#contact">
-                  <Button
-                    variant="outline"
-                    className="h-12 rounded-full border-white/10 bg-white/5 px-6 text-sm font-medium backdrop-blur-sm transition-all hover:border-primary/30 hover:bg-primary/5"
-                  >
-                    Get in touch
-                  </Button>
-                </Link>
-              </motion.div>
+            {/* CTA */}
+            <motion.div 
+              variants={fadeInUp}
+              className="mt-10 flex flex-wrap items-center justify-center gap-4"
+            >
+              <Link href="/contact">
+                <button className="cta-button flex items-center gap-2 rounded-full px-8 py-4 text-base font-medium">
+                  Get in touch
+                  <ArrowUpRight className="h-4 w-4" />
+                </button>
+              </Link>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      <div className="relative z-10 space-y-40 px-6 pb-32">
-        {/* ── FEATURED WORK ── */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mx-auto max-w-6xl"
-        >
-          <motion.div variants={fadeInUp} className="mb-16 flex items-end justify-between">
-            <div className="space-y-3">
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-                Selected Work
-              </p>
-              <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-                Recent Projects
+      {/* ── SCROLL TEXT SECTION ── */}
+      <section className="relative py-32 px-6">
+        <div className="mx-auto max-w-5xl text-center">
+          <p className="text-3xl font-medium leading-relaxed tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
+            <ScrollText>Building scalable web applications </ScrollText>
+            <ScrollText>from concept to deployment, </ScrollText>
+            <ScrollText className="text-muted-foreground">using modern frameworks </ScrollText>
+            <ScrollText className="text-muted-foreground">so you can launch faster </ScrollText>
+            <ScrollText className="text-muted-foreground">and iterate with confidence.</ScrollText>
+          </p>
+        </div>
+      </section>
+
+      {/* ── PROJECTS SECTION ── */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+        className="relative px-6 py-20"
+      >
+        <div className="mx-auto max-w-6xl">
+          {/* Section header */}
+          <motion.div 
+            variants={fadeInUp}
+            className="mb-16 flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end"
+          >
+            <div>
+              <h2 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
+                Selected Projects
+                <sup className="ml-1 text-lg text-muted-foreground">({featuredProjects.length})</sup>
               </h2>
             </div>
             <Link
               href="/projects"
-              className="group hidden items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground sm:flex"
+              className="group flex items-center gap-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
-              View all
+              View all projects
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           </motion.div>
 
-          <div className="grid gap-6 md:grid-cols-2">
+          {/* Project cards - Grid */}
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {featuredProjects.map((project, index) => (
               <motion.div
                 key={index}
@@ -231,100 +303,78 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </motion.section>
 
-          <motion.div variants={fadeInUp} className="mt-8 text-center sm:hidden">
-            <Link href="/projects">
-              <Button
-                variant="outline"
-                className="rounded-full border-white/10 bg-white/5 backdrop-blur-sm"
-              >
-                View all projects
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+      {/* ── SKILLS PREVIEW ── */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+        className="relative px-6 py-20"
+      >
+        <div className="mx-auto max-w-6xl">
+          <motion.div variants={fadeInUp} className="premium-card rounded-3xl p-10 md:p-16">
+            <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                  <span className="text-sm font-medium uppercase tracking-[0.15em] text-muted-foreground">
+                    Technical Stack
+                  </span>
+                </div>
+                <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
+                  Tools I work with
+                </h2>
+                <p className="max-w-md text-muted-foreground">
+                  React, Next.js, Node.js, TypeScript, PostgreSQL, MongoDB, and more.
+                </p>
+              </div>
+              <Link href="/skills">
+                <button className="rounded-full border border-foreground/20 bg-transparent px-6 py-3 text-sm font-medium text-foreground transition-all hover:bg-foreground hover:text-background">
+                  View full stack
+                </button>
+              </Link>
+            </div>
           </motion.div>
-        </motion.section>
+        </div>
+      </motion.section>
 
-        {/* ── SKILLS ── */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mx-auto max-w-6xl"
-        >
-          <motion.div variants={fadeInUp} className="mb-16 space-y-3 text-center">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-              Technical Stack
-            </p>
-            <h2 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Tools I Work With
-            </h2>
-            <p className="mx-auto max-w-lg text-muted-foreground">
-              Technologies I use to build scalable web applications.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            {featuredHobbies.map((hobby, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-              >
-                <HobbyCard {...hobby} />
-              </motion.div>
-            ))}
-          </div>
-
-          <motion.div variants={fadeInUp} className="mt-12 text-center">
-            <Link href="/skills">
-              <Button
-                variant="outline"
-                className="rounded-full border-white/10 bg-white/5 px-6 backdrop-blur-sm transition-all hover:border-primary/30 hover:bg-primary/5"
-              >
-                Explore full stack
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
-          </motion.div>
-        </motion.section>
-
-        {/* ── CONTACT ── */}
-        <motion.section
-          id="contact"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="mx-auto max-w-6xl"
-        >
+      {/* ── CONTACT ── */}
+      <motion.section
+        id="contact"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={staggerContainer}
+        className="relative px-6 py-20 pb-32"
+      >
+        <div className="mx-auto max-w-4xl">
           <motion.div 
             variants={fadeInUp}
-            className="glass-card overflow-hidden rounded-3xl p-8 md:p-12 lg:p-16"
+            className="premium-card overflow-hidden rounded-3xl p-8 md:p-12 lg:p-16"
           >
             <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16">
               {/* LEFT SIDE */}
               <div className="space-y-6">
-                <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
-                  Get in Touch
-                </p>
-                <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight md:text-4xl lg:text-5xl">
-                  Let&apos;s build
-                  <br />
-                  <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">something great</span>
+                <span className="text-sm font-medium uppercase tracking-[0.15em] text-muted-foreground">
+                  Contact
+                </span>
+                <h2 className="text-balance text-3xl font-bold leading-tight tracking-tight text-foreground md:text-4xl">
+                  Let&apos;s build something great together
                 </h2>
                 <p className="max-w-md text-pretty leading-relaxed text-muted-foreground">
-                  I build fast, scalable web applications that solve real
-                  problems. Open to new opportunities and collaborations.
+                  Open to new opportunities and collaborations. 
+                  Drop me a message and I&apos;ll get back to you within 24 hours.
                 </p>
-                <div className="accent-line w-16" />
               </div>
 
               {/* RIGHT SIDE (FORM) */}
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <label className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
+                    <label className="text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">
                       Name
                     </label>
                     <input
@@ -334,12 +384,12 @@ export default function Home() {
                       onChange={(e) =>
                         setFormData({ ...formData, name: e.target.value })
                       }
-                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                       placeholder="Your name"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
+                    <label className="text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">
                       Email
                     </label>
                     <input
@@ -349,14 +399,14 @@ export default function Home() {
                       onChange={(e) =>
                         setFormData({ ...formData, email: e.target.value })
                       }
-                      className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="w-full rounded-xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                       placeholder="your@email.com"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-xs font-medium uppercase tracking-[0.15em] text-muted-foreground">
+                  <label className="text-xs font-medium uppercase tracking-[0.1em] text-muted-foreground">
                     Message
                   </label>
                   <textarea
@@ -366,7 +416,7 @@ export default function Home() {
                     onChange={(e) =>
                       setFormData({ ...formData, message: e.target.value })
                     }
-                    className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    className="w-full resize-none rounded-xl border border-border bg-muted/30 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/50 transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                     placeholder="Tell me about your project..."
                   />
                 </div>
@@ -374,43 +424,71 @@ export default function Home() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-glow group w-full rounded-xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-40"
+                  className="cta-button w-full rounded-xl py-4 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-40"
                 >
                   {isSubmitting ? "Sending..." : "Send message"}
                 </button>
 
                 {/* Inline toast feedback */}
-                <AnimatePresence mode="wait">
-                  {formStatus === "success" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      className="flex items-center gap-2 rounded-lg bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400"
-                    >
-                      <Check className="h-4 w-4" />
-                      <span>Message sent! I&apos;ll get back to you within 24 hours.</span>
-                    </motion.div>
-                  )}
-                  {formStatus === "error" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                      className="flex items-center gap-2 rounded-lg bg-red-500/10 px-4 py-3 text-sm text-red-400"
-                    >
-                      <AlertCircle className="h-4 w-4" />
-                      <span>Something went wrong. Please email me directly at sodoos534@gmail.com</span>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                {formStatus === "success" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-700"
+                  >
+                    <Check className="h-4 w-4" />
+                    <span>Message sent! I&apos;ll get back to you within 24 hours.</span>
+                  </motion.div>
+                )}
+                {formStatus === "error" && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center gap-2 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700"
+                  >
+                    <AlertCircle className="h-4 w-4" />
+                    <span>Something went wrong. Please email me directly.</span>
+                  </motion.div>
+                )}
               </form>
             </div>
           </motion.div>
-        </motion.section>
-      </div>
+        </div>
+      </motion.section>
+
+      {/* ── FOOTER ── */}
+      <footer className="relative px-6 py-12">
+        <div className="mx-auto max-w-6xl">
+          <div className="section-divider mb-12" />
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+              Baatar-Ochir Sodbilegt 2026
+            </p>
+            <div className="flex items-center gap-6">
+              <Link 
+                href="https://github.com/Iori205" 
+                target="_blank"
+                className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                GitHub
+              </Link>
+              <Link 
+                href="https://linkedin.com" 
+                target="_blank"
+                className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                LinkedIn
+              </Link>
+              <Link 
+                href="mailto:sodoos534@gmail.com"
+                className="text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Email
+              </Link>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }

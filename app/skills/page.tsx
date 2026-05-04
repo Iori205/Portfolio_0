@@ -1,7 +1,6 @@
 "use client";
 
 import { HobbyCard } from "@/components/hobby-card";
-import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -78,13 +77,11 @@ export default function SkillsPage() {
   ];
 
   return (
-    <div className="relative min-h-screen">
-      <GalaxyNavigation />
-
+    <div className="relative min-h-screen bg-gradient-subtle">
       <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 backdrop-blur-xl transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all duration-300 hover:bg-muted"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
@@ -97,16 +94,15 @@ export default function SkillsPage() {
         >
           {/* Header */}
           <motion.div variants={fadeInUp} className="space-y-4">
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-primary">
+            <span className="text-sm font-medium uppercase tracking-[0.15em] text-muted-foreground">
               Technical Stack
-            </p>
+            </span>
             <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               Skills & Interests
             </h1>
             <p className="max-w-lg text-lg text-muted-foreground">
               What I build and how I can contribute.
             </p>
-            <div className="accent-line w-20" />
           </motion.div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
