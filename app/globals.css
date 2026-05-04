@@ -100,29 +100,62 @@ body {
 
 /* Premium card style */
 .premium-card {
-  background: oklch(1 0 0);
-  border: 1px solid oklch(0 0 0 / 0.05);
+  background: oklch(1 0 0 / 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid oklch(0 0 0 / 0.04);
   box-shadow: 
+    0 0 0 1px oklch(0 0 0 / 0.02),
     0 1px 2px oklch(0 0 0 / 0.02),
     0 4px 12px oklch(0 0 0 / 0.03);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .premium-card:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-8px) scale(1.01);
+  border-color: oklch(0 0 0 / 0.08);
   box-shadow: 
-    0 8px 16px oklch(0 0 0 / 0.06),
-    0 20px 50px oklch(0 0 0 / 0.1);
+    0 0 0 1px oklch(0 0 0 / 0.03),
+    0 8px 20px oklch(0 0 0 / 0.06),
+    0 24px 60px oklch(0 0 0 / 0.1);
 }
 
-/* Floating navbar */
-.floating-nav {
-  background: oklch(1 0 0 / 0.85);
-  backdrop-filter: blur(20px);
-  border: 1px solid oklch(0 0 0 / 0.06);
+/* Project card enhanced hover */
+.project-card-enhanced {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card-enhanced:hover {
+  transform: translateY(-8px);
   box-shadow: 
-    0 2px 8px oklch(0 0 0 / 0.04),
-    0 8px 32px oklch(0 0 0 / 0.06);
+    0 0 0 1px oklch(0 0 0 / 0.04),
+    0 12px 24px oklch(0 0 0 / 0.08),
+    0 32px 80px oklch(0 0 0 / 0.12);
+}
+
+.project-card-enhanced:hover .project-image {
+  transform: scale(1.08);
+}
+
+.project-card-enhanced:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-card-enhanced:hover .project-arrow {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* Floating navbar with enhanced glass */
+.floating-nav {
+  background: oklch(1 0 0 / 0.7);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-backdrop-filter: blur(24px) saturate(1.2);
+  border: 1px solid oklch(1 0 0 / 0.5);
+  box-shadow: 
+    0 0 0 1px oklch(0 0 0 / 0.03),
+    0 2px 8px oklch(0 0 0 / 0.03),
+    0 8px 32px oklch(0 0 0 / 0.05),
+    inset 0 1px 0 oklch(1 0 0 / 0.5);
 }
 
 /* Scroll progress indicator */
@@ -152,12 +185,65 @@ body {
   animation: text-reveal 0.8s ease-out forwards;
 }
 
-/* Subtle background gradient */
+/* Subtle background gradient with depth */
 .bg-gradient-subtle {
   background: 
-    radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.55 0.2 25 / 0.03) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 100%, oklch(0.6 0.15 40 / 0.02) 0%, transparent 50%),
-    oklch(0.985 0.002 90);
+    radial-gradient(ellipse 100% 80% at 50% -30%, oklch(0.55 0.15 25 / 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 0% 50%, oklch(0.7 0.08 280 / 0.02) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 60% at 100% 50%, oklch(0.65 0.1 40 / 0.02) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, oklch(0.6 0.12 25 / 0.03) 0%, transparent 50%),
+    oklch(0.988 0.002 90);
+}
+
+/* Floating decorative elements */
+.floating-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+.floating-orb-1 {
+  width: 400px;
+  height: 400px;
+  background: oklch(0.55 0.12 25 / 0.08);
+  animation: float-orb 20s ease-in-out infinite;
+}
+
+.floating-orb-2 {
+  width: 300px;
+  height: 300px;
+  background: oklch(0.7 0.08 280 / 0.06);
+  animation: float-orb 25s ease-in-out infinite reverse;
+}
+
+.floating-orb-3 {
+  width: 350px;
+  height: 350px;
+  background: oklch(0.65 0.1 40 / 0.05);
+  animation: float-orb 22s ease-in-out infinite;
+  animation-delay: -5s;
+}
+
+@keyframes float-orb {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+
+/* Subtle grid pattern overlay */
+.grid-pattern {
+  background-image: 
+    linear-gradient(oklch(0 0 0 / 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(0 0 0 / 0.015) 1px, transparent 1px);
+  background-size: 80px 80px;
 }
 
 /* Toggle button group */

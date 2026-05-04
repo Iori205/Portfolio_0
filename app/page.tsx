@@ -114,7 +114,17 @@ export default function Home() {
   return (
     <div className="relative min-h-screen bg-gradient-subtle">
       {/* ── HERO ── */}
-      <section className="relative min-h-screen overflow-hidden px-6 pt-32 pb-20">
+      <section className="relative min-h-screen overflow-hidden px-6 pt-40 pb-32 lg:pt-48 lg:pb-40">
+        {/* Subtle grid pattern */}
+        <div className="pointer-events-none absolute inset-0 grid-pattern opacity-60" />
+        
+        {/* Floating orbs for depth */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="floating-orb floating-orb-1 absolute -left-48 top-1/4" />
+          <div className="floating-orb floating-orb-2 absolute -right-32 top-1/3" />
+          <div className="floating-orb floating-orb-3 absolute bottom-1/4 left-1/2 -translate-x-1/2" />
+        </div>
+        
         {/* Floating project cards - decorative */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           {/* Left side cards */}
@@ -172,18 +182,37 @@ export default function Home() {
               <p className="text-sm font-semibold text-orange-900">power.</p>
             </div>
           </motion.div>
+
+          {/* Additional floating decorative elements */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.6, scale: 1 }}
+            transition={{ duration: 1.5, delay: 1.3 }}
+            className="absolute left-[15%] top-[45%] hidden h-3 w-3 rounded-full bg-primary/40 lg:block"
+            style={{ animationDelay: "1s" }}
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.4, scale: 1 }}
+            transition={{ duration: 1.5, delay: 1.5 }}
+            className="absolute right-[18%] top-[60%] hidden h-2 w-2 rounded-full bg-primary/30 lg:block"
+          />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 0.5, scale: 1 }}
+            transition={{ duration: 1.5, delay: 1.7 }}
+            className="absolute left-[20%] bottom-[30%] hidden h-4 w-4 rounded-full border border-primary/20 lg:block"
+          />
         </div>
 
         {/* Main hero content */}
-        <div className="relative z-10 mx-auto max-w-4xl">
-
-
+        <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-4xl flex-col items-center justify-center">
           {/* Status badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mb-8 flex justify-center"
+            className="mb-10 flex justify-center"
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2">
               <span className="relative flex h-2 w-2">
@@ -215,7 +244,7 @@ export default function Home() {
 
             <motion.p 
               variants={fadeInUp}
-              className="mx-auto mt-8 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl"
+              className="mx-auto mt-10 max-w-xl text-pretty text-lg leading-relaxed text-muted-foreground md:text-xl"
             >
               Full-stack developer specializing in React, Next.js, and Node.js. 
               Code that solves real problems.
@@ -224,7 +253,7 @@ export default function Home() {
             {/* CTA */}
             <motion.div 
               variants={fadeInUp}
-              className="mt-10 flex flex-wrap items-center justify-center gap-4"
+              className="mt-12 flex flex-wrap items-center justify-center gap-4"
             >
               <Link href="/contact">
                 <button className="cta-button flex items-center gap-2 rounded-full px-8 py-4 text-base font-medium">
@@ -238,7 +267,7 @@ export default function Home() {
       </section>
 
       {/* ── SCROLL TEXT SECTION ── */}
-      <section className="relative py-32 px-6">
+      <section className="relative py-40 px-6 lg:py-52">
         <div className="mx-auto max-w-5xl text-center">
           <p className="text-3xl font-medium leading-relaxed tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
             <ScrollText>Building scalable web applications </ScrollText>

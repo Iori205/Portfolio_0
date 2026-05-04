@@ -25,7 +25,7 @@ export function ProjectCard({
 
   return (
     <Wrapper {...wrapperProps} className={`group block h-full ${isComingSoon ? "cursor-default" : ""}`}>
-      <article className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/50 bg-card transition-all duration-500 hover:shadow-xl hover:shadow-black/5">
+      <article className="project-card-enhanced relative flex h-full flex-col overflow-hidden rounded-2xl border border-border/40 bg-card/80 backdrop-blur-sm">
         {/* Image */}
         <div className="relative aspect-[16/10] overflow-hidden bg-gradient-to-br from-slate-100 to-slate-50">
           {image ? (
@@ -33,23 +33,23 @@ export function ProjectCard({
               src={image}
               alt={title}
               fill
-              className="object-cover transition-transform duration-700 group-hover:scale-105"
+              className="project-image object-cover transition-transform duration-700 ease-out"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
+            <div className="project-image absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 transition-transform duration-700 ease-out">
               <span className="text-6xl font-bold text-white/10">{title.charAt(0)}</span>
             </div>
           )}
-          {/* Hover overlay */}
-          <div className={`absolute inset-0 flex items-center justify-center bg-black/0 transition-all duration-300 ${
-            isComingSoon ? "" : "group-hover:bg-black/10"
-          }`}>
-            {!isComingSoon && (
-              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100">
-                <ArrowUpRight className="h-6 w-6 text-foreground" />
-              </div>
-            )}
-          </div>
+          {/* Hover overlay with gradient */}
+          <div className={`project-overlay absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent opacity-0 transition-all duration-500 ${
+            isComingSoon ? "" : ""
+          }`} />
+          {/* Arrow indicator */}
+          {!isComingSoon && (
+            <div className="project-arrow absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 scale-90 items-center justify-center rounded-full bg-white opacity-0 shadow-xl transition-all duration-500">
+              <ArrowUpRight className="h-6 w-6 text-foreground" />
+            </div>
+          )}
         </div>
 
         {/* Content */}
