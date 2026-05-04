@@ -1,25 +1,22 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from "next/link"
-
 interface HobbyCardProps {
-  title: string
-  description: string
-  icon: string
-  link: string
+  title: string;
+  description: string;
+  icon: string;
+  link: string;
 }
 
-export function HobbyCard({ title, description, icon, link }: HobbyCardProps) {
+export function HobbyCard({ title, description }: HobbyCardProps) {
   return (
-    <Link href={link}>
-      <Card className="glass-card group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] h-full border-border/50">
-        <CardHeader>
-          <div className="text-4xl mb-2">{icon}</div>
-          <CardTitle className="group-hover:text-primary transition-colors">{title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <CardDescription className="leading-relaxed">{description}</CardDescription>
-        </CardContent>
-      </Card>
-    </Link>
-  )
+    <article className="premium-card group relative h-full rounded-2xl p-6">
+      {/* Content */}
+      <div className="space-y-3">
+        <h3 className="font-semibold tracking-tight text-foreground transition-colors duration-300 group-hover:text-primary">
+          {title}
+        </h3>
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {description}
+        </p>
+      </div>
+    </article>
+  );
 }

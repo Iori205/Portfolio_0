@@ -1,29 +1,25 @@
-import type { Metadata } from "next";
+"use client";
+
 import { HobbyCard } from "@/components/hobby-card";
-import { GalaxyNavigation } from "@/components/galaxy-navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+  }
+};
 
-export const metadata: Metadata = {
-  title: "Skills & Knowledge | Baatar-Ochir Sodbilegt",
-  description:
-    "Explore Baatar-Ochir Sodbilegt's engineering skills and technical stack",
-  keywords: [
-    "Sodbilegt skills",
-    "software engineer skills",
-    "full-stack skills",
-    "React developer",
-    "Node.js developer",
-    "backend development",
-  ],
-  openGraph: {
-    title: "Skills & Knowledge | Baatar-Ochir Sodbilegt",
-    description: "What Can I Do For You",
-    url: `${siteUrl}/skills`,
-    type: "profile",
-  },
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
+  }
 };
 
 export default function SkillsPage() {
@@ -31,83 +27,95 @@ export default function SkillsPage() {
     {
       title: "Programming Languages",
       description: "JavaScript, TypeScript, HTML, CSS",
-      icon: "",
+      icon: "01",
       link: "#",
     },
     {
       title: "Frameworks & Libraries",
       description: "React, Next.js, Node.js, Express, React Native, Shadcn UI",
-      icon: "",
+      icon: "02",
       link: "#",
     },
     {
       title: "Database / API",
       description: "PostgreSQL, MongoDB, Prisma, REST APIs, GraphQL",
-      icon: "",
+      icon: "03",
       link: "#",
     },
     {
       title: "Tools",
       description: "GitHub, Vercel, Clerk (Auth), Drizzle, Husky",
-      icon: "",
+      icon: "04",
       link: "#",
     },
     {
       title: "Testing",
       description: "Cypress (E2E), Jest (Unit), K6",
-      icon: "",
+      icon: "05",
       link: "#",
     },
     {
       title: "Languages",
       description: "English (working proficiency), Korean (TOPIK 3)",
-      icon: "",
+      icon: "06",
       link: "#",
     },
     {
       title: "Core Profile",
       description:
         "Full-stack developer building scalable web applications with a focus on clean architecture and real user impact.",
-      icon: "",
+      icon: "07",
       link: "#",
     },
     {
       title: "Focus",
       description:
         "Building dashboards, admin systems, and data-driven platforms that solve real user problems.",
-      icon: "",
+      icon: "08",
       link: "#",
     },
   ];
 
   return (
-    <div className="relative min-h-screen">
-      <GalaxyNavigation />
-
-      <div className="relative z-10 py-20 px-4">
+    <div className="relative min-h-screen bg-gradient-subtle">
+      <div className="relative z-10 px-6 pb-20 pt-32">
         <Link
           href="/"
-          className="fixed top-8 left-8 glass-card p-3 rounded-full hover:scale-110 transition-transform z-20"
+          className="fixed left-6 top-24 z-20 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card shadow-sm transition-all duration-300 hover:bg-muted"
         >
-          <ArrowLeft className="w-5 h-5" />
+          <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <div className="max-w-6xl mx-auto space-y-12">
-          <div className="space-y-4 text-center">
-            <h1 className="text-3xl md:text-6xl font-bold bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent text-foreground">
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={staggerContainer}
+          className="mx-auto max-w-6xl space-y-12"
+        >
+          {/* Header */}
+          <motion.div variants={fadeInUp} className="space-y-4">
+            <span className="text-sm font-medium uppercase tracking-[0.15em] text-muted-foreground">
+              Technical Stack
+            </span>
+            <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
               Skills & Interests
             </h1>
-            <p className="text-xl text-foreground">
+            <p className="max-w-lg text-lg text-muted-foreground">
               What I build and how I can contribute.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {hobbies.map((hobby, index) => (
-              <HobbyCard key={index} {...hobby} />
+              <motion.div
+                key={index}
+                variants={fadeInUp}
+              >
+                <HobbyCard {...hobby} />
+              </motion.div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
