@@ -5,7 +5,6 @@ import { ProjectCard } from "@/components/project-card";
 import { ArrowUpRight, Check, AlertCircle, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
 import { useState, useRef } from "react";
 import { sendEmail } from "@/app/actions/send-email";
 
@@ -39,21 +38,9 @@ const featuredProjects = [
   },
 ];
 
-const trustedBy = [
-  { name: "Unifind", logo: "U" },
-  { name: "UniExam", logo: "E" },
-  { name: "ReferU", logo: "R" },
-];
+
 
 // Animation variants
-const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: { 
-    opacity: 1,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-  }
-};
-
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { 
@@ -130,66 +117,66 @@ export default function Home() {
       <section className="relative min-h-screen overflow-hidden px-6 pt-32 pb-20">
         {/* Floating project cards - decorative */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {/* Left side cards */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="floating-card absolute left-[5%] top-[20%] hidden w-48 rotate-[-8deg] rounded-xl bg-card p-2 shadow-xl lg:block"
-            style={{ "--rotate": "-8deg" } as React.CSSProperties}
+            className="floating-card absolute left-[2%] top-[18%] hidden w-56 rotate-[-6deg] overflow-hidden rounded-2xl bg-card shadow-2xl lg:block xl:left-[5%]"
+            style={{ "--rotate": "-6deg" } as React.CSSProperties}
           >
-            <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-muted to-muted/50" />
-            <p className="mt-2 text-xs font-medium text-foreground">Unifind</p>
-            <p className="text-[10px] text-muted-foreground">Full-Stack Platform</p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 100 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="floating-card absolute right-[8%] top-[25%] hidden w-44 rotate-[6deg] rounded-xl bg-card p-2 shadow-xl lg:block"
-            style={{ "--rotate": "6deg", animationDelay: "2s" } as React.CSSProperties}
-          >
-            <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-primary/10 to-primary/5" />
-            <p className="mt-2 text-xs font-medium text-foreground">UniExam</p>
-            <p className="text-[10px] text-muted-foreground">Backend Services</p>
+            <div className="aspect-[4/3] bg-gradient-to-br from-red-500/90 to-red-600/90 p-4">
+              <div className="flex h-full flex-col justify-end">
+                <p className="text-xs font-medium text-white/80">Venture capital for</p>
+                <p className="text-sm font-semibold text-white">the <span className="text-orange-200">human</span> future.</p>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="floating-card absolute bottom-[15%] left-[10%] hidden w-40 rotate-[4deg] rounded-xl bg-card p-2 shadow-xl lg:block"
-            style={{ "--rotate": "4deg", animationDelay: "4s" } as React.CSSProperties}
+            className="floating-card absolute bottom-[20%] left-[3%] hidden w-48 rotate-[3deg] overflow-hidden rounded-2xl bg-card shadow-2xl lg:block xl:left-[8%]"
+            style={{ "--rotate": "3deg", animationDelay: "3s" } as React.CSSProperties}
           >
-            <div className="aspect-[4/3] rounded-lg bg-gradient-to-br from-muted to-muted/50" />
-            <p className="mt-2 text-xs font-medium text-foreground">ReferU</p>
-            <p className="text-[10px] text-muted-foreground">API Services</p>
+            <div className="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 p-4">
+              <p className="font-mono text-lg font-bold tracking-tight text-white">INTELLIGENCE AT</p>
+              <p className="font-mono text-lg font-bold tracking-tight text-amber-400">YOUR FINGERTIPS</p>
+            </div>
+          </motion.div>
+
+          {/* Right side cards */}
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="floating-card absolute right-[2%] top-[15%] hidden w-52 rotate-[5deg] overflow-hidden rounded-2xl bg-card shadow-2xl lg:block xl:right-[5%]"
+            style={{ "--rotate": "5deg", animationDelay: "2s" } as React.CSSProperties}
+          >
+            <div className="aspect-[4/3] bg-gradient-to-br from-blue-600 to-purple-700 p-4">
+              <p className="text-xl font-bold uppercase tracking-wider text-white">BOSTON</p>
+              <p className="text-xl font-bold uppercase tracking-wider text-white">HURRICANES</p>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
+            className="floating-card absolute bottom-[25%] right-[3%] hidden w-44 rotate-[-4deg] overflow-hidden rounded-2xl bg-card shadow-2xl lg:block xl:right-[8%]"
+            style={{ "--rotate": "-4deg", animationDelay: "4s" } as React.CSSProperties}
+          >
+            <div className="aspect-[4/3] bg-gradient-to-br from-amber-100 to-orange-200 p-4">
+              <p className="text-xs font-medium text-orange-800">Your health is your</p>
+              <p className="text-sm font-semibold text-orange-900">power.</p>
+            </div>
           </motion.div>
         </div>
 
         {/* Main hero content */}
         <div className="relative z-10 mx-auto max-w-4xl">
-          {/* Trusted by */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mb-6 flex items-center justify-center gap-2"
-          >
-            <span className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-              Worked with
-            </span>
-            <div className="flex items-center gap-3 ml-4">
-              {trustedBy.map((company) => (
-                <div
-                  key={company.name}
-                  className="flex h-7 w-7 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground"
-                >
-                  {company.logo}
-                </div>
-              ))}
-            </div>
-          </motion.div>
+
 
           {/* Status badge */}
           <motion.div
@@ -457,7 +444,7 @@ export default function Home() {
       </motion.section>
 
       {/* ── FOOTER ── */}
-      <footer className="relative px-6 py-12">
+      <footer className="relative overflow-hidden px-6 py-12">
         <div className="mx-auto max-w-6xl">
           <div className="section-divider mb-12" />
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
@@ -487,6 +474,13 @@ export default function Home() {
               </Link>
             </div>
           </div>
+        </div>
+        
+        {/* Large watermark text - like WenLaunch */}
+        <div className="pointer-events-none absolute bottom-0 left-0 right-0 flex justify-center overflow-hidden">
+          <span className="footer-watermark translate-y-1/3">
+            Baatar
+          </span>
         </div>
       </footer>
     </div>

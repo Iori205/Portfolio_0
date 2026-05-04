@@ -101,18 +101,18 @@ body {
 /* Premium card style */
 .premium-card {
   background: oklch(1 0 0);
-  border: 1px solid oklch(0 0 0 / 0.06);
+  border: 1px solid oklch(0 0 0 / 0.05);
   box-shadow: 
-    0 1px 2px oklch(0 0 0 / 0.04),
-    0 4px 16px oklch(0 0 0 / 0.04);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    0 1px 2px oklch(0 0 0 / 0.02),
+    0 4px 12px oklch(0 0 0 / 0.03);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .premium-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px) scale(1.01);
   box-shadow: 
-    0 4px 8px oklch(0 0 0 / 0.06),
-    0 12px 40px oklch(0 0 0 / 0.08);
+    0 8px 16px oklch(0 0 0 / 0.06),
+    0 20px 50px oklch(0 0 0 / 0.1);
 }
 
 /* Floating navbar */
@@ -223,6 +223,17 @@ body {
 .section-divider {
   height: 1px;
   background: linear-gradient(90deg, transparent, oklch(0 0 0 / 0.08), transparent);
+}
+
+/* Large footer watermark text */
+.footer-watermark {
+  font-size: clamp(8rem, 25vw, 20rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: oklch(0 0 0 / 0.03);
+  user-select: none;
+  pointer-events: none;
 }
 
 /* Reduced motion preferences */
