@@ -115,14 +115,29 @@ export default function Home() {
     <div className="relative min-h-screen bg-gradient-subtle">
       {/* ── HERO ── */}
       <section className="relative min-h-screen overflow-hidden px-6 pt-40 pb-32 lg:pt-48 lg:pb-40">
-        {/* Subtle grid pattern */}
-        <div className="pointer-events-none absolute inset-0 grid-pattern opacity-60" />
+        {/* Hero spotlight lighting */}
+        <div className="pointer-events-none absolute inset-0 hero-lighting" />
         
-        {/* Floating orbs for depth */}
+        {/* Noise texture for subtle grain */}
+        <div className="pointer-events-none absolute inset-0 noise-overlay" />
+        
+        {/* Subtle grid pattern */}
+        <div className="pointer-events-none absolute inset-0 grid-pattern" />
+        
+        {/* Floating orbs for depth - layered */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="floating-orb floating-orb-1 absolute -left-48 top-1/4" />
-          <div className="floating-orb floating-orb-2 absolute -right-32 top-1/3" />
-          <div className="floating-orb floating-orb-3 absolute bottom-1/4 left-1/2 -translate-x-1/2" />
+          {/* Large ambient orbs - background layer */}
+          <div className="floating-orb floating-orb-4 absolute -left-[20%] top-[10%]" />
+          <div className="floating-orb floating-orb-4 absolute -right-[15%] top-[60%]" />
+          
+          {/* Medium orbs - mid layer */}
+          <div className="floating-orb floating-orb-1 absolute -left-32 top-[20%]" />
+          <div className="floating-orb floating-orb-2 absolute -right-24 top-[25%]" />
+          <div className="floating-orb floating-orb-3 absolute bottom-[20%] left-1/2 -translate-x-1/2" />
+          
+          {/* Small accent orbs - foreground layer */}
+          <div className="floating-orb floating-orb-5 absolute left-[10%] bottom-[35%]" />
+          <div className="floating-orb floating-orb-5 absolute right-[15%] top-[45%]" />
         </div>
         
         {/* Floating project cards - decorative */}
@@ -268,7 +283,11 @@ export default function Home() {
 
       {/* ── SCROLL TEXT SECTION ── */}
       <section className="relative py-40 px-6 lg:py-52">
-        <div className="mx-auto max-w-5xl text-center">
+        {/* Ambient lighting for scroll section */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-radial from-primary/[0.03] via-transparent to-transparent blur-3xl" />
+        </div>
+        <div className="relative mx-auto max-w-5xl text-center">
           <p className="text-3xl font-medium leading-relaxed tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl">
             <ScrollText>Building scalable web applications </ScrollText>
             <ScrollText>from concept to deployment, </ScrollText>
@@ -276,6 +295,7 @@ export default function Home() {
             <ScrollText className="text-muted-foreground">so you can launch faster </ScrollText>
             <ScrollText className="text-muted-foreground">and iterate with confidence.</ScrollText>
           </p>
+        </div>
         </div>
       </section>
 
