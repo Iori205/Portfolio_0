@@ -296,7 +296,6 @@ export default function Home() {
             <ScrollText className="text-muted-foreground">and iterate with confidence.</ScrollText>
           </p>
         </div>
-        </div>
       </section>
 
       {/* ── PROJECTS SECTION ── */}
