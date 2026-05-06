@@ -4,7 +4,7 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.985 0.002 90);
+  --background: #fff;
   --foreground: oklch(0.12 0.01 260);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.12 0.01 260);
@@ -94,10 +94,8 @@ html {
 }
 
 body {
-  background: 
-    linear-gradient(180deg, oklch(0.992 0.003 70) 0%, oklch(0.985 0.005 60) 50%, oklch(0.988 0.004 75) 100%);
-  background-attachment: fixed;
-  color: oklch(0.12 0.01 260);
+  background-color: var(--background);
+  background-image: none;
 }
 
 /* Premium card style */
@@ -105,7 +103,7 @@ body {
   background: oklch(1 0 0 / 0.8);
   backdrop-filter: blur(12px);
   border: 1px solid oklch(0 0 0 / 0.04);
-  box-shadow: 
+  box-shadow:
     0 0 0 1px oklch(0 0 0 / 0.02),
     0 1px 2px oklch(0 0 0 / 0.02),
     0 4px 12px oklch(0 0 0 / 0.03);
@@ -115,7 +113,7 @@ body {
 .premium-card:hover {
   transform: translateY(-8px) scale(1.01);
   border-color: oklch(0 0 0 / 0.08);
-  box-shadow: 
+  box-shadow:
     0 0 0 1px oklch(0 0 0 / 0.03),
     0 8px 20px oklch(0 0 0 / 0.06),
     0 24px 60px oklch(0 0 0 / 0.1);
@@ -128,7 +126,7 @@ body {
 
 .project-card-enhanced:hover {
   transform: translateY(-8px);
-  box-shadow: 
+  box-shadow:
     0 0 0 1px oklch(0 0 0 / 0.04),
     0 12px 24px oklch(0 0 0 / 0.08),
     0 32px 80px oklch(0 0 0 / 0.12);
@@ -153,7 +151,7 @@ body {
   backdrop-filter: blur(24px) saturate(1.2);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
   border: 1px solid oklch(1 0 0 / 0.5);
-  box-shadow: 
+  box-shadow:
     0 0 0 1px oklch(0 0 0 / 0.03),
     0 2px 8px oklch(0 0 0 / 0.03),
     0 8px 32px oklch(0 0 0 / 0.05),
@@ -189,30 +187,35 @@ body {
 
 /* Cinematic background with layered depth */
 .bg-gradient-subtle {
-  background: 
-    /* Top spotlight - warm glow from above */
-    radial-gradient(ellipse 120% 60% at 50% -10%, oklch(0.98 0.02 60 / 0.6) 0%, transparent 50%),
-    /* Secondary warm highlight - left */
-    radial-gradient(ellipse 60% 80% at 5% 20%, oklch(0.96 0.02 45 / 0.4) 0%, transparent 40%),
-    /* Soft ambient - right */
-    radial-gradient(ellipse 50% 70% at 95% 30%, oklch(0.97 0.015 30 / 0.35) 0%, transparent 40%),
-    /* Bottom gradient - subtle warm floor */
-    radial-gradient(ellipse 100% 50% at 50% 110%, oklch(0.94 0.02 50 / 0.3) 0%, transparent 50%),
-    /* Center vignette - very subtle darkening at edges */
-    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, oklch(0.96 0.005 90 / 0.15) 100%),
-    /* Base - warm off-white */
-    linear-gradient(180deg, oklch(0.992 0.003 70) 0%, oklch(0.985 0.005 60) 50%, oklch(0.988 0.004 75) 100%);
+  background-color: var(--background);
+  background-image: none;
+  /* radial-gradient(circle at 50% 20%, rgba(0, 0, 0, 0.04), transparent 50%),
+    radial-gradient(circle at 20% 30%, rgba(0, 0, 0, 0.03), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(0, 0, 0, 0.03), transparent 40%),
+    linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.02)); */
 }
 
 /* Hero section enhanced lighting */
 .hero-lighting {
   background:
     /* Primary spotlight from top center */
-    radial-gradient(ellipse 80% 50% at 50% 0%, oklch(1 0.01 60 / 0.8) 0%, transparent 60%),
+    radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      oklch(1 0.01 60 / 0.8) 0%,
+      transparent 60%
+    ),
     /* Secondary fill light */
-    radial-gradient(ellipse 100% 80% at 30% 20%, oklch(0.98 0.015 45 / 0.3) 0%, transparent 50%),
+    radial-gradient(
+        ellipse 100% 80% at 30% 20%,
+        oklch(0.98 0.015 45 / 0.3) 0%,
+        transparent 50%
+      ),
     /* Rim light effect on right */
-    radial-gradient(ellipse 40% 60% at 90% 40%, oklch(0.97 0.02 35 / 0.25) 0%, transparent 40%);
+    radial-gradient(
+        ellipse 40% 60% at 90% 40%,
+        oklch(0.97 0.02 35 / 0.25) 0%,
+        transparent 40%
+      );
 }
 
 /* Soft shadow layer for depth */
@@ -238,21 +241,36 @@ body {
 .floating-orb-1 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, oklch(0.92 0.03 45 / 0.6) 0%, oklch(0.95 0.02 50 / 0.2) 50%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    oklch(0.92 0.03 45 / 0.6) 0%,
+    oklch(0.95 0.02 50 / 0.2) 50%,
+    transparent 70%
+  );
   animation: float-orb 25s ease-in-out infinite;
 }
 
 .floating-orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, oklch(0.94 0.025 30 / 0.5) 0%, oklch(0.96 0.015 35 / 0.15) 50%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    oklch(0.94 0.025 30 / 0.5) 0%,
+    oklch(0.96 0.015 35 / 0.15) 50%,
+    transparent 70%
+  );
   animation: float-orb 30s ease-in-out infinite reverse;
 }
 
 .floating-orb-3 {
   width: 450px;
   height: 450px;
-  background: radial-gradient(circle, oklch(0.93 0.02 60 / 0.45) 0%, oklch(0.95 0.01 55 / 0.1) 50%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    oklch(0.93 0.02 60 / 0.45) 0%,
+    oklch(0.95 0.01 55 / 0.1) 50%,
+    transparent 70%
+  );
   animation: float-orb 28s ease-in-out infinite;
   animation-delay: -8s;
 }
@@ -261,7 +279,11 @@ body {
 .floating-orb-4 {
   width: 600px;
   height: 600px;
-  background: radial-gradient(circle, oklch(0.97 0.01 80 / 0.3) 0%, transparent 60%);
+  background: radial-gradient(
+    circle,
+    oklch(0.97 0.01 80 / 0.3) 0%,
+    transparent 60%
+  );
   animation: float-orb 35s ease-in-out infinite;
   animation-delay: -15s;
 }
@@ -269,13 +291,18 @@ body {
 .floating-orb-5 {
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, oklch(0.95 0.015 40 / 0.35) 0%, transparent 60%);
+  background: radial-gradient(
+    circle,
+    oklch(0.95 0.015 40 / 0.35) 0%,
+    transparent 60%
+  );
   animation: float-orb 22s ease-in-out infinite reverse;
   animation-delay: -5s;
 }
 
 @keyframes float-orb {
-  0%, 100% {
+  0%,
+  100% {
     transform: translate(0, 0) scale(1);
   }
   33% {
@@ -288,12 +315,20 @@ body {
 
 /* Subtle grid pattern overlay with fade */
 .grid-pattern {
-  background-image: 
+  background-image:
     linear-gradient(oklch(0 0 0 / 0.012) 1px, transparent 1px),
     linear-gradient(90deg, oklch(0 0 0 / 0.012) 1px, transparent 1px);
   background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, black 20%, transparent 70%);
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 40%,
+    black 20%,
+    transparent 70%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 40%,
+    black 20%,
+    transparent 70%
+  );
 }
 
 /* Noise texture for subtle grain */
@@ -335,7 +370,8 @@ body {
 
 /* Floating card animation */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(var(--rotate, 0deg));
   }
   50% {
@@ -370,7 +406,12 @@ body {
 /* Section divider */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, oklch(0 0 0 / 0.08), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    oklch(0 0 0 / 0.08),
+    transparent
+  );
 }
 
 /* Large footer watermark text */

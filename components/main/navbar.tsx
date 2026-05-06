@@ -16,12 +16,14 @@ export function Navbar() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setTime(now.toLocaleTimeString("en-US", { 
-        hour: "numeric", 
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true 
-      }));
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        }),
+      );
     };
     updateTime();
     const interval = setInterval(updateTime, 1000);
@@ -35,21 +37,21 @@ export function Navbar() {
   ];
 
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed top-0 z-50 w-full"
     >
-      <div className="mx-auto max-w-5xl px-6 py-4">
-        <div className="floating-nav flex h-14 items-center justify-between rounded-full px-6">
+      <div className="mx-auto max-w-[740px] px-6 py-5">
+        <div className="floating-nav flex h-12 items-center justify-between rounded-full px-5 ">
           {/* Logo */}
           <Link href="/" className="group flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-full bg-foreground text-sm font-semibold text-background transition-transform duration-300 group-hover:scale-105">
               B
             </div>
             <span className="hidden text-sm font-medium tracking-tight text-foreground sm:block">
-              Baatar-Ochir
+              Sodbilegt
             </span>
           </Link>
 
@@ -72,13 +74,8 @@ export function Navbar() {
 
           {/* Right side: time + CTA */}
           <div className="hidden items-center gap-4 md:flex">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Clock className="h-3.5 w-3.5" />
-              <span>{location}</span>
-              <span className="font-mono">{time}</span>
-            </div>
             <Link href="/contact">
-              <button className="cta-button rounded-full px-5 py-2.5 text-sm font-medium">
+              <button className="cta-button rounded-md px-4 py-2 text-xs font-medium">
                 Get in touch
               </button>
             </Link>
@@ -98,11 +95,11 @@ export function Navbar() {
         {/* Mobile Navigation */}
         <AnimatePresence>
           {isOpen && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: -10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
-              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
               className="mt-2 overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-lg md:hidden"
             >
               <div className="flex flex-col gap-1">

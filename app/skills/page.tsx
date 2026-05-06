@@ -1,25 +1,26 @@
 "use client";
 
-import { HobbyCard } from "@/components/hobby-card";
+import { HobbyCard } from "@/components/main/hobby-card";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-  }
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
-  }
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 },
+  },
 };
 
 export default function SkillsPage() {
@@ -86,7 +87,7 @@ export default function SkillsPage() {
           <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
@@ -107,10 +108,7 @@ export default function SkillsPage() {
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {hobbies.map((hobby, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInUp}
-              >
+              <motion.div key={index} variants={fadeInUp}>
                 <HobbyCard {...hobby} />
               </motion.div>
             ))}

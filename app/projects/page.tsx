@@ -1,9 +1,10 @@
 "use client";
 
-import { ProjectCard, ProjectListItem } from "@/components/project-card";
+import { ProjectCard, ProjectListItem } from "@/components/main/project-card";
 import { ArrowLeft, LayoutGrid, List } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 import { useState } from "react";
 
 type ProjectItem = {
@@ -14,21 +15,21 @@ type ProjectItem = {
   link: string;
 };
 
-const fadeInUp = {
+const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
-  }
+    transition: { duration: 0.6, ease: "easeOut" },
+  },
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.2 }
-  }
+    transition: { staggerChildren: 0.08, delayChildren: 0.2 },
+  },
 };
 
 export default function Projects() {
@@ -72,21 +73,23 @@ export default function Projects() {
           <ArrowLeft className="h-4 w-4" />
         </Link>
 
-        <motion.div 
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={staggerContainer}
           className="mx-auto max-w-6xl"
         >
           {/* Header with view toggle */}
-          <motion.div 
-            variants={fadeInUp} 
+          <motion.div
+            variants={fadeInUp}
             className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end"
           >
             <div>
               <h1 className="text-4xl font-bold tracking-tight text-foreground md:text-5xl">
                 Selected Projects
-                <sup className="ml-1 text-lg text-muted-foreground">({allProjects.length})</sup>
+                <sup className="ml-1 text-lg text-muted-foreground">
+                  ({allProjects.length})
+                </sup>
               </h1>
             </div>
 
@@ -117,10 +120,7 @@ export default function Projects() {
           {viewMode === "grid" ? (
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
               {allProjects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                >
+                <motion.div key={index} variants={fadeInUp}>
                   <ProjectCard {...project} />
                 </motion.div>
               ))}
@@ -128,11 +128,7 @@ export default function Projects() {
           ) : (
             <div className="premium-card rounded-2xl">
               {allProjects.map((project, index) => (
-                <motion.div
-                  key={index}
-                  variants={fadeInUp}
-                  className="px-6"
-                >
+                <motion.div key={index} variants={fadeInUp} className="px-6">
                   <ProjectListItem {...project} />
                 </motion.div>
               ))}

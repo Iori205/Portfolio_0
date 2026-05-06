@@ -1,14 +1,17 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter, JetBrains_Mono } from "next/font/google"
-import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
-import { Suspense } from "react"
-import { Navbar } from "@/components/navbar"
-import { ScrollProgress } from "@/components/scroll-progress"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter, JetBrains_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
+import "./globals.css";
+import { Suspense } from "react";
+import { Navbar } from "@/components/main/navbar";
+import { ScrollProgress } from "@/components/main/scroll-progress";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" })
-const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains-mono" })
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://your-domain.com"),
@@ -84,23 +87,31 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   generator: "v0.app",
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`font-sans antialiased ${inter.variable} ${jetbrainsMono.variable}`}>
+      <body
+        className={`font-sans antialiased ${inter.variable} ${jetbrainsMono.variable}`}
+      >
         <ScrollProgress />
         <Navbar />
-        <Suspense fallback={<div className="flex min-h-screen items-center justify-center text-muted-foreground">Loading...</div>}>
+        <Suspense
+          fallback={
+            <div className="flex min-h-screen items-center justify-center text-muted-foreground">
+              Loading...
+            </div>
+          }
+        >
           {children}
         </Suspense>
         <Analytics />
       </body>
     </html>
-  )
+  );
 }
